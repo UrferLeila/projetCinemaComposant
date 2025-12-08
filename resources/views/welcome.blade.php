@@ -5,7 +5,7 @@
     <title>@yield('title')</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    @vite('resources/css/stylesAcceuil.css')
+    @vite('resources/css/styles.css')
 </head>
 
 <body>
@@ -13,9 +13,8 @@
     <main>
         @yield('header')
         <h2 class="title-small">Programme du jour</h2>
-        <div class="carousel-wrapper image-container">
-            <button class="arrow-btn">◀</button>
-            <div class="image-container">
+        <div>
+            <div class="container image-container" id="carousel">
                 <div class="item">
                     <img src="https://themonitormmc.com/wp-content/uploads/2021/01/twilight.jpg">
                     <div class="info">
@@ -63,7 +62,6 @@
                     <button class="btn reserved">Réservé</button>
                 </div>
             </div>
-            <button class="arrow-btn">▶</button>
         </div>
     </main>
 </body>
