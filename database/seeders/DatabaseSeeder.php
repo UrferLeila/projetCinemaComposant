@@ -152,15 +152,20 @@ class DatabaseSeeder extends Seeder
                 ['nom' => 'c12', 'prix_type' => 'normal', 'salle_id' => 1],
                 ['nom' => 'c13', 'prix_type' => 'normal', 'salle_id' => 1],
 
-                
-                ['nom' => 'd1', 'prix_type' => 'vip', 'salle_id' => 1],
-                ['nom' => 'd2', 'prix_type' => 'vip', 'salle_id' => 1],
-                ['nom' => 'd3', 'prix_type' => 'vip', 'salle_id' => 1],
-                ['nom' => 'd4', 'prix_type' => 'vip', 'salle_id' => 1],
-                ['nom' => 'd5', 'prix_type' => 'vip', 'salle_id' => 1],
-                ['nom' => 'd6', 'prix_type' => 'vip', 'salle_id' => 1],
-                ['nom' => 'd7', 'prix_type' => 'vip', 'salle_id' => 1],
-
+                 ['nom' => 'd1', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd2', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd3', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd4', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd5', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd6', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd7', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd8', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd9', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd10', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd11', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd12', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'd13', 'prix_type' => 'normal', 'salle_id' => 1],
+          
                 ['nom' => 'e1', 'prix_type' => 'vip', 'salle_id' => 1],
                 ['nom' => 'e2', 'prix_type' => 'vip', 'salle_id' => 1],
                 ['nom' => 'e3', 'prix_type' => 'vip', 'salle_id' => 1],
@@ -168,6 +173,15 @@ class DatabaseSeeder extends Seeder
                 ['nom' => 'e5', 'prix_type' => 'vip', 'salle_id' => 1],
                 ['nom' => 'e6', 'prix_type' => 'vip', 'salle_id' => 1],
                 ['nom' => 'e7', 'prix_type' => 'vip', 'salle_id' => 1],
+                      
+                ['nom' => 'f1', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'f2', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'f3', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'f4', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'f5', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'f6', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'f7', 'prix_type' => 'vip', 'salle_id' => 1],
+
         ]); 
 
         ReservationSiege::factory()->createMany([

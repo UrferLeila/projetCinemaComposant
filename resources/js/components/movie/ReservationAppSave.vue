@@ -8,6 +8,7 @@
   </div>
 
   <div class="header-container" v-else>
+    <!-- Poster and movie info -->
     <img class="poster-square" :src="movie.image" alt="Poster" />
 
     <div>
@@ -22,6 +23,7 @@
       <button class="btn-red reserved">Réserver</button>
     </div>
 
+    <!-- Selection columns -->
     <div class="selection-column">
       <h1 class="h1-center">Date</h1>
       <div class="header-center">
@@ -41,8 +43,7 @@
 
     <!-- SEATS -->
     <div class="seats-wrapper">
-
-      <!-- LEGEND -->
+      <!-- Legend -->
       <div class="legend-container">
         <div class="legend-item">
           <div class="color normal"></div>
@@ -63,12 +64,14 @@
       </div>
 
       <!-- Seats dynamically rendered -->
-      <div v-for="(row, rowIndex) in seatRows" :key="rowIndex" class="seats-container">
+      <div v-for="(row, rowIndex) in seatRows" :key="rowIndex"
+           :class="['seats-container', row[0]?.prix?.type === 'vip' ? 'seats-container-vip' : 'seats-container-normal']">
         <div v-for="seat in row" 
              :key="seat.nom" 
              class="seat"
              :class="{
                vip: seat.prix?.type === 'vip',
+               normal: seat.prix?.type !== 'vip',
                occupied: seat.occupied,
                selected: selectedSeats.includes(seat.nom)
              }"
@@ -76,7 +79,7 @@
         </div>
       </div>
 
-      <h1 class="h1-center">Écran</h1>
+      <h1 class="screen">Écran</h1>
     </div>
   </div>
 </template>
@@ -106,38 +109,36 @@ export default {
       }
     },
 
-    // Organize seats into rows for display
-    organizeSeats(rowsCount = 3, seatsPerRow = 7) {
-      const allSeats = [...this.seats];
+    organizeSeats() {
+      const vipSeats = this.seats.filter(s => s.prix?.type === "vip");
+      const normalSeats = this.seats.filter(s => s.prix?.type !== "vip");
+
       this.seatRows = [];
-      for (let i = 0; i < rowsCount; i++) {
-        this.seatRows.push(allSeats.splice(0, seatsPerRow));
+
+      for (let i = 0; i < vipSeats.length; i += 7) {
+        this.seatRows.push(vipSeats.slice(i, i + 7));
       }
-      // Add remaining seats as extra row
-      if (allSeats.length > 0) {
-        this.seatRows.push(allSeats);
+
+      for (let i = 0; i < normalSeats.length; i += 13) {
+        this.seatRows.push(normalSeats.slice(i, i + 13));
       }
     }
   },
 
   async mounted() {
     try {
-      // Fetch movie data
       const movieRes = await fetch(`/film/${this.id}`);
       if (!movieRes.ok) throw new Error("Impossible de charger le film");
       this.movie = await movieRes.json();
 
-      // Fetch seats from API
       const seatsRes = await fetch(`/siege`);
       if (!seatsRes.ok) throw new Error("Impossible de charger les sièges");
       this.seats = await seatsRes.json();
 
-      // Randomly occupy some seats for demo purposes
       this.seats.forEach(seat => {
-        seat.occupied = Math.random() < 0.2; // 20% seats randomly occupied
+        seat.occupied = Math.random() < 0.2;
       });
 
-      // Organize into rows
       this.organizeSeats();
     } catch (err) {
       this.error = err.message;
@@ -147,3 +148,4 @@ export default {
   }
 };
 </script>
+
