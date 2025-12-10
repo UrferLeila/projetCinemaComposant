@@ -38,9 +38,9 @@ class DatabaseSeeder extends Seeder
                 'image'  => 'https://themonitormmc.com/wp-content/uploads/2021/01/twilight.jpg',
             ],
             [
-                'titre'  => "Harry Potter 2",
+                'titre'  => "Harry Potter",
                 'auteur' => 'JK Rowling',
-                'image'  => 'https://th.bing.com/th/id/R.e9aa800e8632e5ba3e269369bb4d1c3b?rik=8q%2bHZf4iMdS%2fIw&pid=ImgRaw&r=0',
+                'image'  => 'https://media.posterstore.com/site_images/68631db092c536b9cc92b06f_775081888_WB0101-5.jpg',
             ],
             [
                 'titre'  => 'Jurassic world Rebith',
@@ -104,15 +104,70 @@ class DatabaseSeeder extends Seeder
         Prix::truncate();
 
         Prix::factory()->createMany([
-            ['type' => 'normal', 'prix' => 10.25],
-            ['type' => 'vip', 'prix' => 15.50],
+            ['type' => 'normal', 'prix' => 20],
+            ['type' => 'vip', 'prix' => 45],
         ]);
 
         Siege::factory()->createMany([
-            ['nom' => 'a1', 'prix_type' => 'normal', 'salle_id' => 1],
-            ['nom' => 'a2', 'prix_type' => 'normal', 'salle_id' => 1],
-            ['nom' => 'b1', 'prix_type' => 'vip', 'salle_id' => 1],
-            ['nom' => 'b2', 'prix_type' => 'vip', 'salle_id' => 1],
+            
+                ['nom' => 'a1', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a2', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a3', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a4', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a5', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a6', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a7', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a8', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a9', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a10', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a11', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a12', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'a13', 'prix_type' => 'normal', 'salle_id' => 1],
+
+                ['nom' => 'b1', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b2', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b3', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b4', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b5', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b6', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b7', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b8', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b9', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b10', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b11', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b12', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'b13', 'prix_type' => 'normal', 'salle_id' => 1],
+
+                ['nom' => 'c1', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c2', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c3', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c4', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c5', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c6', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c7', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c8', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c9', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c10', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c11', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c12', 'prix_type' => 'normal', 'salle_id' => 1],
+                ['nom' => 'c13', 'prix_type' => 'normal', 'salle_id' => 1],
+
+                
+                ['nom' => 'd1', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'd2', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'd3', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'd4', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'd5', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'd6', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'd7', 'prix_type' => 'vip', 'salle_id' => 1],
+
+                ['nom' => 'e1', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'e2', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'e3', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'e4', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'e5', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'e6', 'prix_type' => 'vip', 'salle_id' => 1],
+                ['nom' => 'e7', 'prix_type' => 'vip', 'salle_id' => 1],
         ]); 
 
         ReservationSiege::factory()->createMany([

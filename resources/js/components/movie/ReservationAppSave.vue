@@ -46,11 +46,11 @@
       <div class="legend-container">
         <div class="legend-item">
           <div class="color normal"></div>
-          <span>Normal (20CHF)</span>
+          <span>Normal</span>
         </div>
         <div class="legend-item">
           <div class="color vip"></div>
-          <span>VIP (45CHF)</span>
+          <span>VIP</span>
         </div>
         <div class="legend-item">
           <div class="color selected"></div>
@@ -62,43 +62,15 @@
         </div>
       </div>
 
-      <!-- ROW 1 – 7 VIP seats -->
-      <div class="seats-container-small">
-        <div v-for="seat in seatsRow1"
-             :key="seat.id"
+      <!-- Seats dynamically rendered -->
+      <div v-for="(row, rowIndex) in seatRows" :key="rowIndex" class="seats-container">
+        <div v-for="seat in row" 
+             :key="seat.nom" 
              class="seat"
              :class="{
-               vip: seat.type === 'vip',
+               vip: seat.prix?.type === 'vip',
                occupied: seat.occupied,
-               selected: selectedSeats.includes(seat.id)
-             }"
-             @click="toggleSeat(seat)">
-        </div>
-      </div>
-
-      <!-- ROW 2 – 7 VIP seats -->
-      <div class="seats-container-small">
-        <div v-for="seat in seatsRow2"
-             :key="seat.id"
-             class="seat"
-             :class="{
-               vip: seat.type === 'vip',
-               occupied: seat.occupied,
-               selected: selectedSeats.includes(seat.id)
-             }"
-             @click="toggleSeat(seat)">
-        </div>
-      </div>
-
-      <!-- BIG ROWS – 13 seats each -->
-      <div class="seats-container" v-for="(row, rowIndex) in bigSeatRows" :key="rowIndex">
-        <div v-for="seat in row"
-             :key="seat.id"
-             class="seat"
-             :class="{
-               vip: seat.type === 'vip',
-               occupied: seat.occupied,
-               selected: selectedSeats.includes(seat.id)
+               selected: selectedSeats.includes(seat.nom)
              }"
              @click="toggleSeat(seat)">
         </div>
@@ -118,70 +90,60 @@ export default {
       movie: null,
       loading: true,
       error: null,
-
+      seats: [],
+      seatRows: [],
       selectedSeats: [],
-
-      // ROW 1 (7 seats)
-      seatsRow1: Array.from({ length: 7 }, (_, i) => ({
-        id: `row1-${i}`,
-        type: "vip",
-        occupied: false
-      })),
-
-      // ROW 2 (7 seats)
-      seatsRow2: Array.from({ length: 7 }, (_, i) => ({
-        id: `row2-${i}`,
-        type: "vip",
-        occupied: false
-      })),
-
-      // 3 × rows of 13 seats
-      bigSeatRows: [
-        Array.from({ length: 13 }, (_, i) => ({ id: `b1-${i}`, type: "normal", occupied: false })),
-        Array.from({ length: 13 }, (_, i) => ({ id: `b2-${i}`, type: "normal", occupied: false })),
-        Array.from({ length: 13 }, (_, i) => ({ id: `b3-${i}`, type: "normal", occupied: false }))
-      ]
     };
   },
 
   methods: {
     toggleSeat(seat) {
       if (seat.occupied) return;
-      if (this.selectedSeats.includes(seat.id)) {
-        this.selectedSeats = this.selectedSeats.filter((id) => id !== seat.id);
+      if (this.selectedSeats.includes(seat.nom)) {
+        this.selectedSeats = this.selectedSeats.filter(id => id !== seat.nom);
       } else {
-        this.selectedSeats.push(seat.id);
+        this.selectedSeats.push(seat.nom);
       }
     },
 
-    // Randomly occupy some seats in a given row array
-    occupyRandomSeats(row, count) {
-      const indices = [...Array(row.length).keys()];
-      for (let i = 0; i < count; i++) {
-        if (indices.length === 0) break;
-        const randIndex = Math.floor(Math.random() * indices.length);
-        const seatIndex = indices.splice(randIndex, 1)[0];
-        row[seatIndex].occupied = true;
+    // Organize seats into rows for display
+    organizeSeats(rowsCount = 3, seatsPerRow = 7) {
+      const allSeats = [...this.seats];
+      this.seatRows = [];
+      for (let i = 0; i < rowsCount; i++) {
+        this.seatRows.push(allSeats.splice(0, seatsPerRow));
+      }
+      // Add remaining seats as extra row
+      if (allSeats.length > 0) {
+        this.seatRows.push(allSeats);
       }
     }
   },
 
   async mounted() {
     try {
-      const response = await fetch(`/film/${this.id}`);
-      if (!response.ok) throw new Error("Impossible de charger le film");
+      // Fetch movie data
+      const movieRes = await fetch(`/film/${this.id}`);
+      if (!movieRes.ok) throw new Error("Impossible de charger le film");
+      this.movie = await movieRes.json();
 
-      this.movie = await response.json();
+      // Fetch seats from API
+      const seatsRes = await fetch(`/siege`);
+      if (!seatsRes.ok) throw new Error("Impossible de charger les sièges");
+      this.seats = await seatsRes.json();
+
+      // Randomly occupy some seats for demo purposes
+      this.seats.forEach(seat => {
+        seat.occupied = Math.random() < 0.2; // 20% seats randomly occupied
+      });
+
+      // Organize into rows
+      this.organizeSeats();
     } catch (err) {
       this.error = err.message;
     } finally {
-      // Randomly occupy seats after loading
-      this.occupyRandomSeats(this.seatsRow1, 2); // 2 random VIP seats
-      this.occupyRandomSeats(this.seatsRow2, 2); // 2 random VIP seats
-      this.bigSeatRows.forEach(row => this.occupyRandomSeats(row, 4)); // 4 random normal seats per row
       this.loading = false;
     }
   }
 };
-
 </script>
