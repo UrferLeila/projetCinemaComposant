@@ -59,9 +59,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Salle::factory()->create([
-        
             'name'  => 'salle pricipal', 
-
         ]);
 
         Seance::factory()->createMany([
@@ -184,7 +182,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Siege::factory()->createMany([
-            
                 ['nom' => 'a1', 'prix_type' => 'normal', 'salle_id' => 1],
                 ['nom' => 'a2', 'prix_type' => 'normal', 'salle_id' => 1],
                 ['nom' => 'a3', 'prix_type' => 'normal', 'salle_id' => 1],
@@ -256,14 +253,12 @@ class DatabaseSeeder extends Seeder
                 ['nom' => 'f5', 'prix_type' => 'vip', 'salle_id' => 1],
                 ['nom' => 'f6', 'prix_type' => 'vip', 'salle_id' => 1],
                 ['nom' => 'f7', 'prix_type' => 'vip', 'salle_id' => 1],
-
         ]); 
 
         ReservationSiege::factory()->createMany([
             ['siege_nom' => 'a1', 'reservation_id' => 1],
             ['siege_nom' => 'a2', 'reservation_id' => 2],
             ['siege_nom' => 'b1', 'reservation_id' => 3],
-           
         ]);    
     }
 }

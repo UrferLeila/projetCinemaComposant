@@ -126,7 +126,7 @@ export default {
       for (let i = 0; i < normalSeats.length; i += 13) {
         this.seatRows.push(normalSeats.slice(i, i + 13));
       }
-    }
+    },
     formatSeance(seance) {
       const date = new Date(seance.date).toLocaleDateString("fr-CH", {
         weekday: "long",
