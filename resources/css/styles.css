@@ -81,6 +81,12 @@ body {
     display: flex
 }
 
+.btn.selected {
+    background-color: white;
+    color: black;
+}
+
+
 .btn:hover {
     background-color: #4b8ecc;
     transform: scale(1.05);

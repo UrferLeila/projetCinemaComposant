@@ -11,7 +11,7 @@
     <img class="img" :src="movie.image" alt="Poster" />
 
     <div>
-      <h1 class="h1">Choisir une place</h1>
+      <h1 class="h1">Choisir une place :</h1>
 
       <h2 class="h2-title">Film</h2>
       <h3 class="h3">{{ movie.titre }}</h3>
@@ -27,12 +27,13 @@
     </div>
 
     <div class="selection-column">
-      <h1 class="h1-center">Date</h1>
+      <h1 class="h1-center">Choisir la date :</h1>
       <div class="header-center">
         <button
           v-for="(seance, index) in seances"
           :key="index"
           class="btn"
+          :class="{ selected: selectedSeance === seance }"
           @click="selectedSeance = seance"
         >
           {{ new Date(seance.date).toLocaleDateString("fr-CH") }} : {{ seance.heure }}
