@@ -7,21 +7,18 @@ use App\Models\Siege;
 
 class SiegeController extends Controller
 {
-    // List all sieges with relations
     public function index()
     {
         $sieges = Siege::with(['prix', 'salle'])->get();
         return response()->json($sieges, 200);
     }
 
-    // Show a specific siege
     public function show(Siege $siege)
     {
         $siege->load(['prix', 'salle']);
         return response()->json($siege, 200);
     }
 
-    // Create a new siege
     public function store(Request $request)
     {
         $request->validate([
@@ -34,7 +31,6 @@ class SiegeController extends Controller
         return response()->json($siege, 201);
     }
 
-    // Update an existing siege
     public function update(Request $request, Siege $siege)
     {
         $request->validate([
@@ -46,7 +42,6 @@ class SiegeController extends Controller
         return response()->json($siege, 200);
     }
 
-    // Delete a siege
     public function destroy(Siege $siege)
     {
         $siege->delete();

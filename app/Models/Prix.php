@@ -9,7 +9,7 @@ class Prix extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'type'; // string primary key
+    protected $primaryKey = 'type'; 
     public $incrementing = false;
     protected $keyType = 'string';
     public $timestamps = false;
@@ -19,7 +19,6 @@ class Prix extends Model
         'prix',
     ];
 
-    // Optional: if you want to link to Siege (inverse relation)
     public function sieges()
     {
         return $this->hasMany(Siege::class, 'prix_type', 'type');

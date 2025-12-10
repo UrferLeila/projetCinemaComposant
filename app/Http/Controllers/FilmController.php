@@ -15,13 +15,13 @@ class FilmController extends Controller
 
     public function show(string $id)
     {
-    $film = Film::with('seances')->find($id);
+        $film = Film::with('seances')->find($id);
 
-    if (!$film) {
-        return response()->json(['message' => 'Film not found'], 404);
-    }
+        if (!$film) {
+            return response()->json(['message' => 'Film not found'], 404);
+        }
 
-    return response()->json($film, 200);
+        return response()->json($film, 200);
     }
 
     public function store(Request $request)

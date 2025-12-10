@@ -43,9 +43,7 @@
       </div>
     </div>
 
-    <!-- SEATS -->
     <div class="seats-wrapper">
-      <!-- Legend -->
       <div class="legend-container">
         <div class="legend-item">
           <div class="color normal"></div>
@@ -65,23 +63,29 @@
         </div>
       </div>
 
-      <!-- Seats dynamically rendered -->
-      <div v-for="(row, rowIndex) in seatRows" :key="rowIndex"
-           :class="['seats-container', row[0]?.prix?.type === 'vip' ? 'seats-container-vip' : 'seats-container-normal']">
-        <div v-for="seat in row" 
-             :key="seat.nom" 
-             class="seat"
-             :class="{
-               vip: seat.prix?.type === 'vip',
-               normal: seat.prix?.type !== 'vip',
-               occupied: seat.occupied,
-               selected: selectedSeats.includes(seat.nom)
-             }"
-             @click="toggleSeat(seat)">
-        </div>
+      <div
+        v-for="(row, rowIndex) in seatRows"
+        :key="rowIndex"
+        :class="[
+          'seats-container',
+          row[0]?.prix?.type === 'vip' ? 'seats-container-vip' : 'seats-container-normal',
+        ]"
+      >
+        <div
+          v-for="seat in row"
+          :key="seat.nom"
+          class="seat"
+          :class="{
+            vip: seat.prix?.type === 'vip',
+            normal: seat.prix?.type !== 'vip',
+            occupied: seat.occupied,
+            selected: selectedSeats.includes(seat.nom),
+          }"
+          @click="toggleSeat(seat)"
+        ></div>
       </div>
 
-      <h1 class="screen">Écran</h1>
+      <h1 class="h1">Écran</h1>
     </div>
   </div>
 </template>
@@ -107,15 +111,15 @@ export default {
     toggleSeat(seat) {
       if (seat.occupied) return;
       if (this.selectedSeats.includes(seat.nom)) {
-        this.selectedSeats = this.selectedSeats.filter(id => id !== seat.nom);
+        this.selectedSeats = this.selectedSeats.filter((id) => id !== seat.nom);
       } else {
         this.selectedSeats.push(seat.nom);
       }
     },
 
     organizeSeats() {
-      const vipSeats = this.seats.filter(s => s.prix?.type === "vip");
-      const normalSeats = this.seats.filter(s => s.prix?.type !== "vip");
+      const vipSeats = this.seats.filter((s) => s.prix?.type === "vip");
+      const normalSeats = this.seats.filter((s) => s.prix?.type !== "vip");
 
       this.seatRows = [];
 
@@ -141,21 +145,17 @@ export default {
 
   async mounted() {
     try {
-      const movieRes = await fetch(`/film/${this.id}`);
-      if (!movieRes.ok) throw new Error("Impossible de charger le film");
-      this.movie = await movieRes.json();
-
       const seatsRes = await fetch(`/siege`);
       if (!seatsRes.ok) throw new Error("Impossible de charger les sièges");
       this.seats = await seatsRes.json();
 
-      this.seats.forEach(seat => {
-        seat.occupied = Math.random() < 0.2;
-      });
-
       this.organizeSeats();
       const response = await fetch(`/film/${this.id}`);
       if (!response.ok) throw new Error("Impossible de charger le film");
+
+      const res = await fetch(`/film/${this.id}`);
+      if (!res.ok) throw new Error("Impossible de charger le film");
+      this.movie = await res.json();
       const data = await response.json();
       this.movie = data;
       this.seances = data.seances || [];
@@ -164,7 +164,6 @@ export default {
     } finally {
       this.loading = false;
     }
-  }
+  },
 };
 </script>
-

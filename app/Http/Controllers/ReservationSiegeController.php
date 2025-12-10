@@ -7,21 +7,19 @@ use App\Models\ReservationSiege;
 
 class ReservationSiegeController extends Controller
 {
-    // List all reservation-sieges with related siege and reservation
     public function index()
     {
         $reservations = ReservationSiege::with(['siege', 'reservation'])->get();
         return response()->json($reservations, 200);
     }
 
-    // Show a specific reservation-siege
     public function show(ReservationSiege $reservationSiege)
     {
         $reservationSiege->load(['siege', 'reservation']);
+        
         return response()->json($reservationSiege, 200);
     }
 
-    // Create a new reservation-siege
     public function store(Request $request)
     {
         $request->validate([
@@ -36,7 +34,6 @@ class ReservationSiegeController extends Controller
         return response()->json($reservationSiege, 201);
     }
 
-    // Update an existing reservation-siege
     public function update(Request $request, ReservationSiege $reservationSiege)
     {
         $request->validate([
@@ -48,7 +45,6 @@ class ReservationSiegeController extends Controller
         return response()->json($reservationSiege, 200);
     }
 
-    // Delete a reservation-siege
     public function destroy(ReservationSiege $reservationSiege)
     {
         $reservationSiege->delete();
