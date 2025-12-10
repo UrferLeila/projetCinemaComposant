@@ -14,7 +14,7 @@ class ReservationSiege extends Model
         'reservation_id',
     ];
 
-    public $timestamps = false; // if table has no timestamps
+    public $timestamps = false; 
 
     public function siege()
     {

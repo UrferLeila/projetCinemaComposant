@@ -44,7 +44,6 @@ body {
     text-align: center;
     margin-top: 50px;
     font-size: 35px;
-    font-weight: 600;
     color: white;
     font-weight: bold;
 }
@@ -114,20 +113,10 @@ body {
     margin-top: 20px;
 }
 
-.btn-red.reserved:hover {
-    .btn-red:hover {
-        background-color: rgb(207, 42, 42);
-        transform: scale(1.05);
-    }
-}
 
-
-.image-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    padding: 40px 20px;
+.btn-red:hover {
+    background-color: rgb(207, 42, 42);
+    transform: scale(1.05);
 }
 
 .item {
@@ -180,14 +169,6 @@ body {
     background: #1d1d1d;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.header-center {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    width: 100%;
 }
 
 .legend-container {
@@ -277,11 +258,4 @@ body {
 
 .seat.selected {
     background: #00ff62;
-}
-
-.screen {
-    color: white;
-    margin-top: 20px;
-    font-size: 24px;
-    font-weight: 600;
 }

@@ -9,7 +9,7 @@ class Siege extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'nom'; // string primary key
+    protected $primaryKey = 'nom'; 
     public $incrementing = false;
     protected $keyType = 'string';
     public $timestamps = false;
@@ -20,13 +20,11 @@ class Siege extends Model
         'salle_id',
     ];
 
-    // Relation to Prix
     public function prix()
     {
         return $this->belongsTo(Prix::class, 'prix_type', 'type');
     }
 
-    // Relation to Salle
     public function salle()
     {
         return $this->belongsTo(Salle::class, 'salle_id', 'id');
