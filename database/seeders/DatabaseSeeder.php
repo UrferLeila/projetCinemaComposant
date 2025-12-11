@@ -258,7 +258,10 @@ class DatabaseSeeder extends Seeder
         ReservationSiege::factory()->createMany([
             ['siege_nom' => 'a1', 'reservation_id' => 1],
             ['siege_nom' => 'a2', 'reservation_id' => 2],
-            ['siege_nom' => 'b1', 'reservation_id' => 3],
+            ['siege_nom' => 'b1', 'reservation_id' => 2],
+            ['siege_nom' => 'b13', 'reservation_id' => 2],
+            ['siege_nom' => 'c8', 'reservation_id' => 2],
+            ['siege_nom' => 'f5', 'reservation_id' => 2],
         ]);    
     }
 }

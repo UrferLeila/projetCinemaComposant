@@ -12,6 +12,12 @@ use App\Http\Controllers\ReservationController;
 Route::get('film/all', [FilmController::class, 'index']);
 Route::apiResource('film', FilmController::class);
 
+Route::get('/seance/{id}/occupied', function ($id) {
+    return \App\Models\ReservationSiege::whereHas('reservation', function ($q) use ($id) {
+        $q->where('seance_id', $id);
+    })->pluck('siege_nom');
+});
+
 Route::get('seance/all', [SeanceController::class, 'index']);
 Route::apiResource('seance', SeanceController::class);
 
@@ -20,6 +26,7 @@ Route::apiResource('siege', SiegeController::class);
 
 Route::get('reservationSiege/all', [ReservationSiegeController::class, 'index']);
 Route::apiResource('reservationSiege', ReservationSiegeController::class);
+
 
 Route::get('/{any}', function () {
     return view('movievue.index');

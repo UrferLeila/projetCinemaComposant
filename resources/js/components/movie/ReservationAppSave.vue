@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading">
-    <p>Chargement du film…</p>
+    <p class="title-small">Chargement du film…</p>
   </div>
 
   <div v-else-if="error">
@@ -18,16 +18,16 @@
       <h3 class="h3">{{ movie.titre }}</h3>
 
       <h2 class="h2-title">Date et Horaire</h2>
+
       <h3 class="h3" v-if="selectedSeance">
         {{ formatSeance(selectedSeance) }}
       </h3>
-
       <h3 class="h3" v-else>Sélectionnez une séance</h3>
 
       <button class="btn-red">Réserver</button>
     </div>
 
-    <!-- Selection columns -->
+    <!-- Sélection des séances -->
     <div class="selection-column">
       <h1 class="h1-center">Choisir la date :</h1>
       <div class="header-center">
@@ -36,13 +36,15 @@
           :key="index"
           class="btn"
           :class="{ selected: selectedSeance === seance }"
-          @click="selectedSeance = seance"
+          @click="selectSeance(seance)"
         >
-          {{ new Date(seance.date).toLocaleDateString("fr-CH") }} : {{ seance.heure }}
+          {{ new Date(seance.date).toLocaleDateString("fr-CH") }} :
+          {{ seance.heure }}
         </button>
       </div>
     </div>
 
+    <!-- Seats -->
     <div class="seats-wrapper">
       <div class="legend-container">
         <div class="legend-item">
@@ -68,7 +70,9 @@
         :key="rowIndex"
         :class="[
           'seats-container',
-          row[0]?.prix?.type === 'vip' ? 'seats-container-vip' : 'seats-container-normal',
+          row[0]?.prix?.type === 'vip'
+            ? 'seats-container-vip'
+            : 'seats-container-normal',
         ]"
       >
         <div
@@ -108,14 +112,50 @@ export default {
   },
 
   methods: {
-    toggleSeat(seat) {
-      if (seat.occupied) return;
-      if (this.selectedSeats.includes(seat.nom)) {
-        this.selectedSeats = this.selectedSeats.filter((id) => id !== seat.nom);
-      } else {
-        this.selectedSeats.push(seat.nom);
+    // Load occupied seats for the selected seance
+    async loadOccupiedSeats(seanceId) {
+      try {
+        const res = await fetch(`/seance/${seanceId}/occupied`);
+        const occupied = await res.json();
+
+        // Reset all seats
+        this.seats.forEach((seat) => (seat.occupied = false));
+
+        // Mark occupied seats
+        this.seats.forEach((seat) => {
+          if (occupied.includes(seat.nom)) {
+            seat.occupied = true;
+          }
+        });
+
+        this.organizeSeats();
+      } catch (error) {
+        console.error("Failed to load occupied seats:", error);
       }
     },
+
+    // Called when user clicks a seance
+    selectSeance(seance) {
+      this.selectedSeance = seance;
+      this.selectedSeats = []; // clear user selection
+      this.loadOccupiedSeats(seance.id);
+    },
+
+    toggleSeat(seat) {
+  if (!this.selectedSeance) {
+    alert("Veuillez sélectionner une séance avant de choisir un siège.");
+    return;
+  }
+
+  if (seat.occupied) return;
+
+  if (this.selectedSeats.includes(seat.nom)) {
+    this.selectedSeats = this.selectedSeats.filter((id) => id !== seat.nom);
+  } else {
+    this.selectedSeats.push(seat.nom);
+  }
+},
+
 
     organizeSeats() {
       const vipSeats = this.seats.filter((s) => s.prix?.type === "vip");
@@ -131,6 +171,7 @@ export default {
         this.seatRows.push(normalSeats.slice(i, i + 13));
       }
     },
+
     formatSeance(seance) {
       const date = new Date(seance.date).toLocaleDateString("fr-CH", {
         weekday: "long",
@@ -143,22 +184,24 @@ export default {
     },
   },
 
+  // Initial loading
   async mounted() {
     try {
+      // Load seats
       const seatsRes = await fetch(`/siege`);
       if (!seatsRes.ok) throw new Error("Impossible de charger les sièges");
       this.seats = await seatsRes.json();
 
+      // Organize seat layout
       this.organizeSeats();
-      const response = await fetch(`/film/${this.id}`);
-      if (!response.ok) throw new Error("Impossible de charger le film");
 
-      const res = await fetch(`/film/${this.id}`);
-      if (!res.ok) throw new Error("Impossible de charger le film");
-      this.movie = await res.json();
-      const data = await response.json();
-      this.movie = data;
-      this.seances = data.seances || [];
+      // Load film
+      const filmRes = await fetch(`/film/${this.id}`);
+      if (!filmRes.ok) throw new Error("Impossible de charger le film");
+      const filmData = await filmRes.json();
+
+      this.movie = filmData;
+      this.seances = filmData.seances || [];
     } catch (err) {
       this.error = err.message;
     } finally {
