@@ -11,11 +11,9 @@ return new class extends Migration
         Schema::create('reservation_sieges', function (Blueprint $table) {
             $table->id();
 
-            // Since siege_nom is a string PK in sieges, use string here
             $table->string('siege_nom');
             $table->unsignedBigInteger('reservation_id');
 
-            // Foreign keys
             $table->foreign('siege_nom')->references('nom')->on('sieges')->cascadeOnDelete();
             $table->foreign('reservation_id')->references('id')->on('reservations')->cascadeOnDelete();
 

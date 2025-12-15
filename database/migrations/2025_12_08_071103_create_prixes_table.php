@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::create('prixes', function (Blueprint $table) {
             $table->string('type')->primary();
             $table->integer('prix');
-            // No timestamps, because model has $timestamps = false
         });
     }
 

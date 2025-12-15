@@ -8,28 +8,18 @@
   </div>
 
   <div class="header-container" v-else>
-    <!-- Poster and movie info -->
-    <img class="poster-square" :src="movie.image" alt="Poster" />
-
+    <img class="poster-square" :src="movie.image" />
     <div>
-      <h1 class="h1">Choisir une place :</h1>
-
+      <h1 class="h1">Choisir une place</h1>
       <h2 class="h2-title">Film</h2>
       <h3 class="h3">{{ movie.titre }}</h3>
-
       <h2 class="h2-title">Date et Horaire</h2>
-
-      <h3 class="h3" v-if="selectedSeance">
-        {{ formatSeance(selectedSeance) }}
-      </h3>
+      <h3 class="h3" v-if="selectedSeance">{{ formatSeance(selectedSeance) }}</h3>
       <h3 class="h3" v-else>Sélectionnez une séance</h3>
-
-      <button class="btn-red">Réserver</button>
+      <button class="btn-red" @click="openConnection">Réserver</button>
     </div>
-
-    <!-- Sélection des séances -->
     <div class="selection-column">
-      <h1 class="h1-center">Choisir la date :</h1>
+      <h1 class="h1-center">Choisir la séance :</h1>
       <div class="header-center">
         <button
           v-for="(seance, index) in seances"
@@ -38,13 +28,11 @@
           :class="{ selected: selectedSeance === seance }"
           @click="selectSeance(seance)"
         >
-          {{ new Date(seance.date).toLocaleDateString("fr-CH") }} :
-          {{ seance.heure }}
+          {{ new Date(seance.date).toLocaleDateString("fr-CH") }} {{ seance.heure }}
         </button>
       </div>
     </div>
 
-    <!-- Seats -->
     <div class="seats-wrapper">
       <div class="legend-container">
         <div class="legend-item">
@@ -70,9 +58,7 @@
         :key="rowIndex"
         :class="[
           'seats-container',
-          row[0]?.prix?.type === 'vip'
-            ? 'seats-container-vip'
-            : 'seats-container-normal',
+          row[0]?.prix?.type === 'vip' ? 'seats-container-vip' : 'seats-container-normal',
         ]"
       >
         <div
@@ -92,11 +78,34 @@
       <h1 class="h1">Écran</h1>
     </div>
   </div>
+
+  <Connection
+    v-if="showLoginModal"
+    :login="login"
+    @close="closeLoginModal"
+    @submit="loginUser"
+    @open-register="openRegisterModal"
+  />
+
+  <Register
+    v-if="showRegisterModal"
+    :login="loginRegister"
+    @close="closeRegisterModal"
+    @submit="registerUser"
+    @open-login="openConnection"
+  />
 </template>
 
 <script>
+import Connection from "@/components/movie/Connection.vue";
+import Register from "@/components/movie/Register.vue";
+
 export default {
   props: ["id"],
+  components: {
+    Connection,
+    Register,
+  },
 
   data() {
     return {
@@ -108,20 +117,27 @@ export default {
       selectedSeats: [],
       seances: [],
       selectedSeance: null,
+      showLoginModal: false,
+      showRegisterModal: false,
+      login: {
+        email: "",
+        password: "",
+      },
+      loginRegister: {
+        name: "",
+        email: "",
+        password: "",
+        passwordConfirm: "",
+      },
     };
   },
 
   methods: {
-    // Load occupied seats for the selected seance
     async loadOccupiedSeats(seanceId) {
       try {
         const res = await fetch(`/seance/${seanceId}/occupied`);
         const occupied = await res.json();
-
-        // Reset all seats
         this.seats.forEach((seat) => (seat.occupied = false));
-
-        // Mark occupied seats
         this.seats.forEach((seat) => {
           if (occupied.includes(seat.nom)) {
             seat.occupied = true;
@@ -134,28 +150,26 @@ export default {
       }
     },
 
-    // Called when user clicks a seance
     selectSeance(seance) {
       this.selectedSeance = seance;
-      this.selectedSeats = []; // clear user selection
+      this.selectedSeats = [];
       this.loadOccupiedSeats(seance.id);
     },
 
     toggleSeat(seat) {
-  if (!this.selectedSeance) {
-    alert("Veuillez sélectionner une séance avant de choisir un siège.");
-    return;
-  }
+      if (!this.selectedSeance) {
+        alert("Veuillez sélectionner une séance avant de choisir un siège.");
+        return;
+      }
 
-  if (seat.occupied) return;
+      if (seat.occupied) return;
 
-  if (this.selectedSeats.includes(seat.nom)) {
-    this.selectedSeats = this.selectedSeats.filter((id) => id !== seat.nom);
-  } else {
-    this.selectedSeats.push(seat.nom);
-  }
-},
-
+      if (this.selectedSeats.includes(seat.nom)) {
+        this.selectedSeats = this.selectedSeats.filter((id) => id !== seat.nom);
+      } else {
+        this.selectedSeats.push(seat.nom);
+      }
+    },
 
     organizeSeats() {
       const vipSeats = this.seats.filter((s) => s.prix?.type === "vip");
@@ -182,24 +196,47 @@ export default {
 
       return `${date}, ${seance.heure}`;
     },
+
+    openConnection() {
+      this.showLoginModal = true;
+      this.showRegisterModal = false;
+    },
+
+    closeLoginModal() {
+      this.showLoginModal = false;
+    },
+
+    openRegisterModal() {
+      this.showLoginModal = false;
+      this.showRegisterModal = true;
+    },
+
+    closeRegisterModal() {
+      this.showRegisterModal = false;
+    },
+
+    loginUser(credentials) {
+      console.log("Connexion avec :", credentials);
+      this.login = credentials;
+      this.showLoginModal = false;
+    },
+
+    registerUser(credentials) {
+      console.log("Inscription avec :", credentials);
+      this.login = credentials;
+      this.showRegisterModal = false;
+    },
   },
 
-  // Initial loading
   async mounted() {
     try {
-      // Load seats
       const seatsRes = await fetch(`/siege`);
       if (!seatsRes.ok) throw new Error("Impossible de charger les sièges");
       this.seats = await seatsRes.json();
-
-      // Organize seat layout
       this.organizeSeats();
-
-      // Load film
       const filmRes = await fetch(`/film/${this.id}`);
       if (!filmRes.ok) throw new Error("Impossible de charger le film");
       const filmData = await filmRes.json();
-
       this.movie = filmData;
       this.seances = filmData.seances || [];
     } catch (err) {

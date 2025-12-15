@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
             [
                 'name'  => 'Alice',
                 'email' => 'alice@ceff.ch',
-                'password' => '1234',
+                'password' => bcrypt('1234'), 
             ],
 
             [
                 'name'  => 'Bob',
                 'email' => 'bob@ceff.ch',
-                'password' => '1234',
+                'password' => bcrypt('1234'), 
             ],
         ]);
 
