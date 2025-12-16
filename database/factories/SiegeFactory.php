@@ -1,14 +1,10 @@
 <?php
 
 namespace Database\Factories;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Prix;
 use App\Models\Salle;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Siege>
- */
 class SiegeFactory extends Factory
 {
     public function definition(): array

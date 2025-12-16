@@ -14,7 +14,6 @@ return new class extends Migration
             $table->date('date');
             $table->time('heure');
 
-            // clé étrangère correcte
             $table->foreignId('film_id')->constrained('films')->cascadeOnDelete();
             $table->foreignId('salle_id')->constrained('salles')->cascadeOnDelete();
 

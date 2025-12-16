@@ -12,14 +12,12 @@
 
     <div class="container image-container" v-else>
       <div class="item" v-for="movie in movies" :key="movie.id">
-        <img :src="movie.image"/>
+        <img :src="movie.image" />
         <div class="info">
           <h3>{{ movie.titre }}</h3>
           <h3>{{ movie.auteur }}</h3>
         </div>
-        <button class="btn-red" @click="goToReservation(movie.id)">
-          Réserver
-        </button>
+        <button class="btn-red" @click="goReservation(movie.id)">Réserver</button>
       </div>
     </div>
   </div>
@@ -42,17 +40,17 @@ export default {
         const data = await response.json();
         this.movies = data;
       } catch (err) {
-        console.error(err);
         this.error = err.message;
       } finally {
         this.loading = false;
       }
     },
 
-    goToReservation(id) {
+    goReservation(id) {
       this.$router.push(`/reservation/${id}`);
     },
   },
+
   mounted() {
     this.refresh();
   },

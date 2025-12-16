@@ -13,11 +13,8 @@ return new class extends Migration
             $table->string('prix_type');
             $table->unsignedBigInteger('salle_id');
 
-            // Foreign keys
             $table->foreign('prix_type')->references('type')->on('prixes')->onDelete('cascade');
             $table->foreign('salle_id')->references('id')->on('salles')->onDelete('cascade');
-
-            // No timestamps
         });
     }
 
