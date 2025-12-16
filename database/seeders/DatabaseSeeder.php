@@ -13,16 +13,15 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-
     public function run(): void
     {
+    
         User::factory()->createMany([
             [
                 'name'  => 'Alice',
                 'email' => 'alice@ceff.ch',
                 'password' => bcrypt('1234'), 
             ],
-
             [
                 'name'  => 'Bob',
                 'email' => 'bob@ceff.ch',
