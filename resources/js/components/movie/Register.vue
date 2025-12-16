@@ -54,15 +54,6 @@ export default {
     openConnection() {
       this.$emit("open-connection");
     },
-
-    async registerUser() {
-      try {
-        await axios.post("/register", this.localConnection); //Problème ici
-        this.$emit("register-success");
-      } catch (error) {
-        this.errorMsg = error.response?.data?.message || "Erreur lors de l'inscription";
-      }
-    },
   },
 };
 </script>

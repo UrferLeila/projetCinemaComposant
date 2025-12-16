@@ -13,7 +13,6 @@
       <h3 class="link" @click="openRegister">Inscrivez-vous ici</h3>
       <p v-if="errorMsg" class="error-msg">{{ errorMsg }}</p>
       <div class="modal-actions">
-        <button class="btn-red" @click="openDetails">Details</button>
         <button class="btn-red" @click="loginUser">Connexion</button>
         <button class="btn-red" @click="$emit('close')">Annuler</button>
       </div>
@@ -22,7 +21,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -36,24 +34,6 @@ export default {
   methods: {
     openRegister() {
       this.$emit("open-register");
-    },
-
-    openDetails() {
-      this.$emit("open-details")
-    },
-
-    async loginUser() {
-      try {
-        const response = await axios.post("/connection", this.localLogin); 
-        if (response.data.success) {
-          this.errorMsg = "";
-          this.$emit("login-success", response.data.user);
-        } else {
-          this.errorMsg = response.data.message;
-        }
-      } catch (error) {
-        this.errorMsg = "Une erreur est survenue, veuillez réessayer.";
-      }
     },
   },
 };
