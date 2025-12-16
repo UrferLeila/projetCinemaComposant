@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -35,20 +34,6 @@ export default {
   methods: {
     openRegister() {
       this.$emit("open-register");
-    },
-
-    async loginUser() {
-      try {
-        const response = await axios.post("/connection", this.localLogin); //Problème ici
-        if (response.data.success) {
-          this.errorMsg = "";
-          this.$emit("login-success", response.data.user);
-        } else {
-          this.errorMsg = response.data.message;
-        }
-      } catch (error) {
-        this.errorMsg = "Une erreur est survenue, veuillez réessayer.";
-      }
     },
   },
 };

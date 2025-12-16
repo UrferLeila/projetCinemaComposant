@@ -28,7 +28,7 @@
           :class="{ selected: selectedSeance === seance }"
           @click="selectSeance(seance)"
         >
-          {{ new Date(seance.date).toLocaleDateString("fr-CH") }} {{ seance.heure }}
+          {{ new Date(seance.date).toLocaleDateString("fr-CH") }}, {{ seance.heure }}
         </button>
       </div>
     </div>
@@ -85,6 +85,7 @@
     @close="closeConnection"
     @submit="loginUser"
     @open-register="openRegister"
+    @open-details="openDetails"
   />
 
   <Register
@@ -94,17 +95,21 @@
     @submit="registerUser"
     @open-connection="openConnection"
   />
+
+  <Details v-if="showDetails" @close="closeAll" />
 </template>
 
 <script>
 import Connection from "@/components/movie/Connection.vue";
 import Register from "@/components/movie/Register.vue";
+import Details from "@/components/movie/Details.vue";
 
 export default {
   props: ["id"],
   components: {
     Connection,
     Register,
+    Details,
   },
 
   data() {
@@ -119,6 +124,7 @@ export default {
       selectedSeance: null,
       showConnection: false,
       showRegister: false,
+      showDetails: false,
       login: {
         email: "",
         password: "",
@@ -191,6 +197,10 @@ export default {
     },
 
     openConnection() {
+      if (!this.selectedSeance) {
+        alert("Veuillez sélectionner une séance et des places avant de réserver.");
+        return;
+      }
       this.showConnection = true;
       this.showRegister = false;
     },
@@ -218,6 +228,17 @@ export default {
       console.log("Inscription avec :", credentials);
       this.login = credentials;
       this.showRegister = false;
+    },
+
+    openDetails() {
+      this.closeAll();
+      this.showDetails = true;
+    },
+
+    closeAll() {
+      this.showConnection = false;
+      this.showRegister = false;
+      this.showDetails = false;
     },
   },
 
