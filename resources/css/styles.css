@@ -100,24 +100,13 @@ body {
     display: flex
 }
 
-.btn-login {
-    background-color: #2563eb;
-    color: white;
-}
-
-.btn-register {
-    background-color: #16a34a;
-    color: white;
-}
-
 .btn.selected {
     background-color: white;
     color: black;
 }
 
-
 .btn:hover {
-    background-color: #4b8ecc;
+    background-color: #12599b;
     transform: scale(1.05);
 }
 
@@ -141,6 +130,7 @@ body {
     background-color: rgb(207, 42, 42);
     color: white;
     margin-top: 10px;
+    text-decoration: none;
 }
 
 
@@ -369,5 +359,24 @@ body {
     justify-content: space-between;
     margin-top: 20px;
     font-size: 18px;
+    color: white;
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.5rem;
+}
+
+/* Optional: make dropdown items match your theme */
+.dropdown-menu {
+    background-color: #1f1f1f;
+    border: none;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-item:hover {
+    background-color: #2563eb;
     color: white;
 }

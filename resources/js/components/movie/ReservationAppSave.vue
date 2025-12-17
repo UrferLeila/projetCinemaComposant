@@ -16,7 +16,9 @@
       <h2 class="h2-title">Date et Horaire</h2>
       <h3 class="h3" v-if="selectedSeance">{{ formatSeance(selectedSeance) }}</h3>
       <h3 class="h3" v-else>Sélectionnez une séance</h3>
-      <button class="btn-red" @click="openConnection">Réserver</button>
+
+      <button class="btn-red" v-if="isAuth" @click="openConnection">Réserver</button>
+      <button class="btn-red" v-else="isAuth" @click="openConnection">Réserver</button>
     </div>
     <div class="selection-column">
       <h1 class="h1-center">Choisir la séance</h1>
@@ -79,41 +81,21 @@
     </div>
   </div>
 
-  <Connection
-    v-if="showConnection"
-    :login="login"
-    @close="closeConnection"
-    @submit="loginUser"
-    @open-register="openRegister"
-    @open-details="openDetails"
-  />
-
-  <Register
-    v-if="showRegister"
-    :login="loginRegister"
-    @close="closeRegister"
-    @submit="registerUser"
-    @open-connection="openConnection"
-  />
-
   <Details v-if="showDetails" @close="closeAll" />
 </template>
 
 <script>
-import Connection from "@/components/movie/Connection.vue";
-import Register from "@/components/movie/Register.vue";
 import Details from "@/components/movie/Details.vue";
 
 export default {
   props: ["id"],
   components: {
-    Connection,
-    Register,
     Details,
   },
 
   data() {
     return {
+      isAuth: false,
       movie: null,
       loading: true,
       error: null,
@@ -122,23 +104,24 @@ export default {
       selectedSeats: [],
       seances: [],
       selectedSeance: null,
-      showConnection: false,
-      showRegister: false,
       showDetails: false,
-      login: {
-        email: "",
-        password: "",
-      },
-      loginRegister: {
-        name: "",
-        email: "",
-        password: "",
-        passwordConfirm: "",
-      },
     };
   },
 
   methods: {
+    async loadIsAuth() {
+      try {
+        const response = await fetch("/api/isAuth");
+        if (!response.ok) throw new Error("Impossible d'obtenir le statue de connection");
+        const data = await response.json();
+        this.isAuth = data;
+      } catch (err) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
+    },
+
     async loadOccupiedSeats(seanceId) {
       try {
         const res = await fetch(`/seance/${seanceId}/occupied`);
@@ -197,37 +180,11 @@ export default {
     },
 
     openConnection() {
-      if (!this.selectedSeance) {
-        alert("Veuillez sélectionner une séance et des places avant de réserver.");
-        return;
+      if (this.isAuth) {
+        this.showDetails = true;
+      } else {
+        window.location.href = "/login";
       }
-      this.showConnection = true;
-      this.showRegister = false;
-    },
-
-    closeConnection() {
-      this.showConnection = false;
-    },
-
-    openRegister() {
-      this.showConnection = false;
-      this.showRegister = true;
-    },
-
-    closeRegister() {
-      this.showRegister = false;
-    },
-
-    loginUser(credentials) {
-      console.log("Connexion avec :", credentials);
-      this.login = credentials;
-      this.showConnection = false;
-    },
-
-    registerUser(credentials) {
-      console.log("Inscription avec :", credentials);
-      this.login = credentials;
-      this.showRegister = false;
     },
 
     openDetails() {
@@ -236,23 +193,28 @@ export default {
     },
 
     closeAll() {
-      this.showConnection = false;
-      this.showRegister = false;
       this.showDetails = false;
     },
   },
 
   async mounted() {
+    this.loading = true;
     try {
+      // Load seats
       const seatsRes = await fetch(`/siege`);
       if (!seatsRes.ok) throw new Error("Impossible de charger les sièges");
       this.seats = await seatsRes.json();
       this.organizeSeats();
+
+      // Load film
       const filmRes = await fetch(`/film/${this.id}`);
       if (!filmRes.ok) throw new Error("Impossible de charger le film");
       const filmData = await filmRes.json();
       this.movie = filmData;
       this.seances = filmData.seances || [];
+
+      // Load auth status
+      await this.loadIsAuth();
     } catch (err) {
       this.error = err.message;
     } finally {

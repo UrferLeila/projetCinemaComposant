@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay">
     <div class="modal details-modal">
-      <h2 class="h1-center">Bonjour Alice,</h2>
+      <h2 class="h1-center">Résume</h2>
       <p class="subtitle">Voici le récapitulatif de votre réservation.</p>
       <div class="details-section">
         <span class="label">Film</span>

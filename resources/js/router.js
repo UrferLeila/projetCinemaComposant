@@ -5,7 +5,8 @@ import ReservationApp from './components/movie/ReservationAppSave.vue';
 const routes = [
     {
         path: '/',
-        component: MovieApp,
+        name: MovieApp,
+        component: () => import('@/components/movie/MovieApp.vue')
     },
     {
         path: '/reservation/:id',
