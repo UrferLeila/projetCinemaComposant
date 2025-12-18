@@ -1,7 +1,6 @@
 <header>
     <nav class="navbar">
-        <h1 class="h1">Le Palace</h1>
-
+        <h1 class="h1 logo">Le Palace</h1>
         <div class="navbar-actions">
             @guest
                 <a href="{{ route('login') }}" class="btn btn-red">Login</a>
@@ -9,28 +8,25 @@
             @endguest
 
             @auth
-                <div class="dropdown">
-                    <button class="btn btn-red dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        {{ Auth::user()->name }}
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="profileBtn">
+                        {{-- <img src="https://picsum.photos/40" alt="Profile Picture" class="profile-pic"> --}}
+                        <span class="profile-name">{{ Auth::user()->name }}</span>
+                        <span class="arrow">&#9662;</span>
                     </button>
-
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                    <ul class="profile-menu" id="profileMenu">
+                        <li><a href="{{ route('profile.edit') }}">Profile</a></li>
                         <li>
-                            <hr class="dropdown-divider">
+                            <hr>
                         </li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="dropdown-item text-danger" type="submit">Logout</button>
+                                <button type="submit">Logout</button>
                             </form>
                         </li>
                     </ul>
                 </div>
-
-
-
             @endauth
         </div>
     </nav>
