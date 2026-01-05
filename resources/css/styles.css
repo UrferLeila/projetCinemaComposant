@@ -98,7 +98,7 @@ h3 {
 }
 
 .btn:hover {
-    background-color: #3586d1;
+    background-color: rgb(226, 50, 50);
     transform: scale(1.05);
 }
 
@@ -193,6 +193,14 @@ h3 {
 }
 
 /* ======================== Layout Helpers ======================== */
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
 .header-container {
     display: flex;
     flex-direction: row;
@@ -497,4 +505,302 @@ h3 {
 .profile-menu hr {
     margin: 5px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.top-icon-delete {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.616);
+    color: rgb(255, 0, 0);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.top-icon-edit {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    background: rgba(0, 0, 0, 0.616);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+/* ======================== Admin Add Movie Button ======================== */
+.btn-add {
+    background: rgb(207, 42, 42);
+    /* bright blue */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    /* space between icon and text */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    margin: 15px auto;
+    /* center horizontally */
+    justify-content: center;
+}
+
+.btn-add i {
+    font-size: 18px;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.btn-add {
+    margin: 15px auto;
+    /* centers horizontally */
+    display: inline-flex;
+    /* allows gap and icon alignment */
+    justify-content: center;
+    /* centers icon + text inside button */
+}
+
+.add-film-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+
+}
+
+.top-icon-delete {
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.top-icon-delete:hover {
+    background-color: rgba(255, 0, 0, 0.9);
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+    transform: scale(1.15);
+}
+
+.top-icon-delete:hover i {
+    color: white;
+}
+
+/* Edit icon hover - theme friendly */
+.top-icon-edit {
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.top-icon-edit:hover {
+    background-color: rgb(255, 255, 255);
+    /* subtle light overlay */
+    box-shadow: 0 0 10px rgb(255, 255, 255);
+    /* soft glow */
+    transform: scale(1.15);
+}
+
+.top-icon-edit:hover i {
+    color: #000000;
+    /* stays white, high contrast */
+}
+
+
+/* ======================== Add Movie Page ======================== */
+.add-movie-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+    background: #0a2636;
+    /* Dark page background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Modal */
+.details-modal {
+    background: #1f1f1f;
+    /* Dark modal background */
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+    transition: all 0.3s ease;
+}
+
+/* Titles */
+.title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+/* Form Fields (Floating Labels) */
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 25px;
+}
+
+.form-group input.input {
+    padding: 14px 15px;
+    border-radius: 10px;
+    border: 1px solid #205281;
+    font-size: 14px;
+    background: #0a2636;
+    /* Dark input */
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.form-group input.input:focus {
+    outline: none;
+    border-color: #3586d1;
+    /* Blue focus */
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+.form-group label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #ffffff;
+    font-size: 14px;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-group input.input:focus+label,
+.form-group input.input:not(:placeholder-shown)+label {
+    top: -8px;
+    left: 10px;
+    font-size: 12px;
+    color: #3586d1;
+    background: #1f1f1f;
+    padding: 0 5px;
+}
+
+/* Poster preview */
+.poster-preview {
+    width: 200px;
+    height: 300px;
+    margin: 0 auto 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.poster-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.poster-preview img:hover {
+    transform: scale(1.05);
+}
+
+/* Messages */
+.error-msg {
+    color: #ff4d4d;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.success-msg {
+    color: #00ff62;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* Modal Buttons */
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 12px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+}
+
+.btn-add {
+    background-color: rgb(207, 42, 42);
+    /* Red add button */
+    color: white;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(207, 42, 42, 0.5);
+}
+
+.btn-cancel {
+    background-color: rgb(207, 42, 42);
+    /* Blue cancel button */
+    color: white;
+}
+
+.btn-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(207, 42, 42, 0.5);
+}
+
+.form-group input.input::placeholder {
+    color: #7f8c8d;
+    /* or any color you want */
+    opacity: 1;
+    /* some browsers make it semi-transparent by default */
+}
+
+
+.form-group input.input::placeholder {
+    color: #ffffff;
 }
