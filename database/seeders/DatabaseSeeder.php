@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
     
         User::factory()->createMany([
             [
+                'name'  => 'Admin',
+                'email' => 'admin@ceff.ch',
+                'password' => bcrypt('1234'), 
+            ],
+            [
                 'name'  => 'Alice',
                 'email' => 'alice@ceff.ch',
                 'password' => bcrypt('1234'), 
@@ -43,7 +48,7 @@ class DatabaseSeeder extends Seeder
             [
                 'titre'  => 'Jurassic world Rebith',
                 'auteur' => 'Gareth Edwards',
-                'image'  => 'https://m.media-amazon.com/images/S/pv-target-images/414f6b00ca574fdc273a693daffd721abc71c5ee49b28253853916ddbd550a69.jpg',
+                'image'  => 'https://play-lh.googleusercontent.com/hoXWWwTBGZIdrOklQPlgtAXBtI5TDA3GqDuH-cdsABxNTM-wMVFzl8vRwctkUPs05h9iIRN-Oa68Foh_RQ',
             ],
             [
                 'titre'  => 'Avatar',
@@ -53,7 +58,7 @@ class DatabaseSeeder extends Seeder
             [
                 'titre'  => 'Demon Slayer',
                 'auteur' => 'Koyoharu Gotōge',
-                'image'  => 'https://th.bing.com/th/id/R.941ea5309720a308cb5349931db87199?rik=c9VMk1GCxATPlg&riu=http%3a%2f%2fbreakforbuzz.com%2fwp-content%2fuploads%2f2025%2f03%2fDemon-Slayer-La-Forteresse-Infinie.jpg&ehk=W1EnvEopwsjg2kfgCWrpLBknRCkbzEzRhs2f0o%2bcCfY%3d&risl=&pid=ImgRaw&r=0',
+                'image'  => 'https://media.pathe.fr/movie/alex/HO00009211/poster/lg/11/movie&uuid=D34717F6-0CFD-4D39-AC34-D50AAAE4714B',
             ],
         ]);
 

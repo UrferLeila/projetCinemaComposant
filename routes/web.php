@@ -7,6 +7,7 @@ use App\Http\Controllers\SiegeController;
 use App\Http\Controllers\ReservationSiegeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IsAuthController;
+use App\Http\Controllers\IsAdminController;
 use App\Http\Controllers\ReservationController;
 
 
@@ -22,6 +23,11 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/api/isAuth', [IsAuthController::class, 'index']);
 
+Route::get('/api/isAdmin', [IsAdminController::class, 'index']);
+
+
+Route::middleware('auth')->post('/film/add', [FilmController::class, 'store']);
+Route::middleware('auth')->delete('/film/delete/{id}', [FilmController::class, 'destroy']);
 
 Route::get('film/all', [FilmController::class, 'index']);
 Route::apiResource('film', FilmController::class);
