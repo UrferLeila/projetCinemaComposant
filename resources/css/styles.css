@@ -483,6 +483,7 @@ h3 {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+
 .image-wrapper {
     position: relative;
     width: 100%;
@@ -518,10 +519,8 @@ h3 {
     font-size: 16px;
 }
 
-/* ======================== Admin Add Movie Button ======================== */
 .btn-add {
     background: rgb(207, 42, 42);
-    /* bright blue */
     color: white;
     border: none;
     border-radius: 12px;
@@ -532,11 +531,9 @@ h3 {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    /* space between icon and text */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
     margin: 15px auto;
-    /* center horizontally */
     justify-content: center;
 }
 
@@ -551,11 +548,8 @@ h3 {
 
 .btn-add {
     margin: 15px auto;
-    /* centers horizontally */
     display: inline-flex;
-    /* allows gap and icon alignment */
     justify-content: center;
-    /* centers icon + text inside button */
 }
 
 .add-film-page {
@@ -585,7 +579,6 @@ h3 {
     color: white;
 }
 
-/* Edit icon hover - theme friendly */
 .top-icon-edit {
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
@@ -593,34 +586,29 @@ h3 {
 
 .top-icon-edit:hover {
     background-color: rgb(255, 255, 255);
-    /* subtle light overlay */
     box-shadow: 0 0 10px rgb(255, 255, 255);
-    /* soft glow */
     transform: scale(1.15);
 }
 
 .top-icon-edit:hover i {
     color: #000000;
-    /* stays white, high contrast */
 }
 
 
-/* ======================== Add Movie Page ======================== */
 .add-movie-page {
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 60px 20px;
-    background: #0a2636;
-    /* Dark page background */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* horizontal center */
+    align-items: center;
+    /* vertical center */
+    padding: 20px;
+    /* optional small padding */
 }
 
-/* Modal */
+
 .details-modal {
     background: #1f1f1f;
-    /* Dark modal background */
     padding: 30px 40px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
@@ -629,7 +617,6 @@ h3 {
     transition: all 0.3s ease;
 }
 
-/* Titles */
 .title {
     text-align: center;
     margin-bottom: 10px;
@@ -645,7 +632,6 @@ h3 {
     margin-bottom: 25px;
 }
 
-/* Form Fields (Floating Labels) */
 .form-group {
     position: relative;
     display: flex;
@@ -659,7 +645,6 @@ h3 {
     border: 1px solid #205281;
     font-size: 14px;
     background: #0a2636;
-    /* Dark input */
     color: white;
     transition: all 0.3s ease;
 }
@@ -667,7 +652,6 @@ h3 {
 .form-group input.input:focus {
     outline: none;
     border-color: #3586d1;
-    /* Blue focus */
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
 }
 
@@ -692,7 +676,6 @@ h3 {
     padding: 0 5px;
 }
 
-/* Poster preview */
 .poster-preview {
     width: 200px;
     height: 300px;
@@ -713,7 +696,6 @@ h3 {
     transform: scale(1.05);
 }
 
-/* Messages */
 .error-msg {
     color: #ff4d4d;
     text-align: center;
@@ -728,14 +710,14 @@ h3 {
     font-weight: 500;
 }
 
-/* Modal Buttons */
 .modal-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.btn {
+
+.btn-add {
     flex: 1;
     padding: 12px 0;
     border-radius: 12px;
@@ -745,11 +727,7 @@ h3 {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 0 5px;
-}
-
-.btn-add {
     background-color: rgb(207, 42, 42);
-    /* Red add button */
     color: white;
 }
 
@@ -759,8 +737,16 @@ h3 {
 }
 
 .btn-cancel {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 12px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
     background-color: rgb(207, 42, 42);
-    /* Blue cancel button */
     color: white;
 }
 
@@ -771,12 +757,385 @@ h3 {
 
 .form-group input.input::placeholder {
     color: #7f8c8d;
-    /* or any color you want */
     opacity: 1;
-    /* some browsers make it semi-transparent by default */
 }
 
 
 .form-group input.input::placeholder {
     color: #ffffff;
+}
+
+
+.btn-add2 {
+    background-color: rgb(207, 42, 42);
+    color: white;
+    border: none;
+    border-radius: 12px;
+
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.514);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    margin: 10px;
+}
+
+.btn-add2:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgb(0, 0, 0);
+}
+
+.seances-section {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 12px;
+    background: #0f1e2a;
+    border: 1px solid #205281;
+}
+
+.seances-section h3 {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.no-seances {
+    color: #a3a3a3;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.seance-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    background: #1f1f1f;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seance-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.seance-item input,
+.seance-item select {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #205281;
+    background: #0a2636;
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.seance-item input:focus,
+.seance-item select:focus {
+    outline: none;
+    border-color: #3586d1;
+    box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
+}
+
+.btn-remove {
+    margin-top: 14px;
+    background: rgb(226, 50, 50);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(226, 50, 50, 0.6);
+}
+
+.btn-add-seance {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 0;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    background: rgb(207, 42, 42);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-add-seance:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(207, 42, 42, 0.5);
+}
+
+/* Make the calendar and time icons white */
+.seance-item input[type="date"]::-webkit-calendar-picker-indicator,
+.seance-item input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(2);
+    cursor: pointer;
+}
+
+.seance-item input[type="date"]::-moz-focus-inner,
+.seance-item input[type="time"]::-moz-focus-inner {
+    border: 0;
+}
+
+/* ======================== Edit Movie Page Styles ======================== */
+.edit-movie-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #0a2636;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Modal */
+.edit-movie-page .details-modal {
+    background: #1f1f1f;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+    transition: all 0.3s ease;
+}
+
+.edit-movie-page .title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+.edit-movie-page .subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+/* Form Groups */
+.edit-movie-page .form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 25px;
+}
+
+.edit-movie-page .form-group input.input {
+    padding: 14px 15px;
+    border-radius: 10px;
+    border: 1px solid #205281;
+    font-size: 14px;
+    background: #0a2636;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.edit-movie-page .form-group input.input:focus {
+    outline: none;
+    border-color: #3586d1;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Poster Preview */
+.edit-movie-page .poster-preview {
+    width: 200px;
+    height: 300px;
+    margin: 0 auto 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.edit-movie-page .poster-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.edit-movie-page .poster-preview img:hover {
+    transform: scale(1.05);
+}
+
+/* Messages */
+.edit-movie-page .error-msg {
+    color: #ff4d4d;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.edit-movie-page .success-msg {
+    color: #00ff62;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* Modal Actions */
+.edit-movie-page .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.edit-movie-page .btn-add,
+.edit-movie-page .btn-cancel {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 12px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    background-color: rgb(207, 42, 42);
+    color: white;
+}
+
+.edit-movie-page .btn-add:hover,
+.edit-movie-page .btn-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(207, 42, 42, 0.5);
+}
+
+/* Seances Section */
+.edit-movie-page .seances-section {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 12px;
+    background: #0f1e2a;
+    border: 1px solid #205281;
+}
+
+.edit-movie-page .seances-section h3 {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.edit-movie-page .no-seances {
+    color: #a3a3a3;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.edit-movie-page .seance-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    background: #1f1f1f;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-movie-page .seance-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.edit-movie-page .seance-item input,
+.edit-movie-page .seance-item select {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #205281;
+    background: #0a2636;
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.edit-movie-page .seance-item input:focus,
+.edit-movie-page .seance-item select:focus {
+    outline: none;
+    border-color: #3586d1;
+    box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
+}
+
+/* Remove / Add Seance Buttons */
+.edit-movie-page .btn-remove {
+    margin-top: 14px;
+    background: rgb(226, 50, 50);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-movie-page .btn-remove:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(226, 50, 50, 0.6);
+}
+
+.edit-movie-page .btn-add-seance {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 0;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    background: rgb(207, 42, 42);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-movie-page .btn-add-seance:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(207, 42, 42, 0.5);
+}
+
+/* Calendar & Time Icons White */
+.edit-movie-page .seance-item input[type="date"]::-webkit-calendar-picker-indicator,
+.edit-movie-page .seance-item input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(2);
+    cursor: pointer;
+}
+
+.edit-movie-page .seance-item input[type="date"]::-moz-focus-inner,
+.edit-movie-page .seance-item input[type="time"]::-moz-focus-inner {
+    border: 0;
 }
