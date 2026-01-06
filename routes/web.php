@@ -27,6 +27,7 @@ Route::get('/api/isAdmin', [IsAdminController::class, 'index']);
 
 
 Route::middleware('auth')->post('/film/add', [FilmController::class, 'store']);
+Route::middleware('auth')->put('/film/update/{id}', [FilmController::class, 'update']);
 Route::middleware('auth')->delete('/film/delete/{id}', [FilmController::class, 'destroy']);
 
 Route::get('film/all', [FilmController::class, 'index']);
@@ -40,6 +41,10 @@ Route::get('/seance/{id}/occupied', function ($id) {
 
 Route::get('seance/all', [SeanceController::class, 'index']);
 Route::apiResource('seance', SeanceController::class);
+Route::middleware('auth')->post('/seance/add', [SeanceController::class, 'store']);
+Route::middleware('auth')->put('/seance/update/{id}', [SeanceController::class, 'update']);
+
+
 
 Route::get('siege/all', [SiegeController::class, 'index']);
 Route::apiResource('siege', SiegeController::class);

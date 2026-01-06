@@ -35,6 +35,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Film::factory()->createMany([
+            // [
+            //     'titre'  => 'Red One',
+            //     'auteur' => 'Jake Kasdan',
+            //     'image'  => 'https://fr.web.img6.acsta.net/c_310_420/img/11/4d/114d28897d8f491d67f12b943711e9b0.jpg',
+            // ],
             [
                 'titre'  => 'Twilight',
                 'auteur' => 'Stephenie Meyer',

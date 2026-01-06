@@ -40,13 +40,17 @@ class FilmController extends Controller
         return response()->json($film, 200);
     }
 
-    public function destroy(string $id)
-    {
-        $film = Film::find($id);
-        if (!$film) {
-            return response()->json(['message' => 'Film not found'], 404);
-        }
-        $film->delete();
-        return response()->json(['message' => 'Film deleted'], 200);
+   public function destroy($id)
+{
+    $film = Film::find($id);
+
+    if (!$film) {
+        return response()->json(['message' => 'Film not found'], 404);
     }
+
+    $film->delete(); // will delete all seances and their reservations automatically
+
+    return response()->json(['message' => 'Film and all related seances/reservations deleted successfully.']);
+}
+
 }

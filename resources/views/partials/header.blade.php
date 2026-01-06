@@ -18,6 +18,9 @@
                         <li><a href="{{ route('profile.edit') }}">Profile</a></li>
                         <li>
                             <hr>
+                            <li><a href="/vue/film/add/">Ajouter un film</a></li>
+                        <li>
+                            <hr>
                         </li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">

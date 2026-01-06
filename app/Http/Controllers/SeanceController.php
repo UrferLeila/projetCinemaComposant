@@ -58,15 +58,24 @@ class SeanceController extends Controller
     }
 
     public function destroy(string $id)
-    {
-        $seance = Seance::find($id);
-        if (!$seance) {
-            return response()->json(['message' => 'Seance not found'], 404);
-        }
-
-        $seance->delete();
-        return response()->json(['message' => 'Seance deleted'], 200);
+{
+    $seance = Seance::with('reservations.reservationSieges')->find($id);
+    if (!$seance) {
+        return response()->json(['message' => 'Seance not found'], 404);
     }
+
+    // Delete reservations and their reserved seats
+    foreach ($seance->reservations as $reservation) {
+        $reservation->reservationSieges()->delete(); // delete reserved seats
+        $reservation->delete(); // delete reservation
+    }
+
+    // Delete the seance itself
+    $seance->delete();
+
+    return response()->json(['message' => 'Seance and all related reservations deleted'], 200);
+}
+
 
     public function seats(string $id)
     {

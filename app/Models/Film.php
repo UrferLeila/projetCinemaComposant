@@ -19,4 +19,18 @@ class Film extends Model
     {
         return $this->hasMany(Seance::class);
     }
+ protected static function booted()
+    {
+        static::deleting(function ($film) {
+            foreach ($film->seances as $seance) {
+                // Delete reservations and reserved seats
+                foreach ($seance->reservations as $reservation) {
+                    $reservation->reservationSieges()->delete();
+                    $reservation->delete();
+                }
+
+                $seance->delete();
+            }
+        });
+    }
 }
