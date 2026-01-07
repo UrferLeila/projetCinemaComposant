@@ -3,6 +3,7 @@ import MovieApp from './components/movie/MovieApp.vue';
 import ReservationApp from './components/movie/ReservationAppSave.vue';
 import FilmEditApp from './components/movie/FilmEditApp.vue';
 import FilmAddApp from './components/movie/FilmAddApp.vue';
+import resevationList from './components/movie/resevationList.vue';
 
 const routes = [
     {
@@ -26,6 +27,12 @@ const routes = [
         path: '/film/add/',
         name: 'film/add',
         component: FilmAddApp,
+        props: true,
+    },
+    {
+        path: '/resevationList/',
+        name: 'resevationList',
+        component: resevationList,
         props: true,
     },
 ];

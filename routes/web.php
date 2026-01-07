@@ -25,6 +25,8 @@ Route::get('/api/isAuth', [IsAuthController::class, 'index']);
 
 Route::get('/api/isAdmin', [IsAdminController::class, 'index']);
 
+Route::get('/api/reservations', [ReservationController::class, 'index']);
+
 
 Route::middleware('auth')->post('/film/add', [FilmController::class, 'store']);
 Route::middleware('auth')->put('/film/update/{id}', [FilmController::class, 'update']);
