@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   props: {
@@ -48,12 +48,12 @@ export default {
   },
   computed: {
     seatNames() {
-      return this.selectedSeats.map(seat => seat.nom);
+      return this.selectedSeats.map((seat) => seat.nom);
     },
     totalPrice() {
       const priceMap = { normal: 20, vip: 45 };
       return this.selectedSeats.reduce((sum, seat) => {
-        const type = seat.prix_type || seat.prix?.type || 'normal';
+        const type = seat.prix_type || seat.prix?.type || "normal";
         return sum + (priceMap[type] || 0);
       }, 0);
     },
@@ -61,35 +61,35 @@ export default {
   methods: {
     async confirmReservation() {
       if (!this.selectedSeance.id) {
-        alert('Séance invalide, veuillez la sélectionner à nouveau.');
+        alert("Séance invalide, veuillez la sélectionner à nouveau.");
         return;
       }
 
       if (!this.selectedSeats.length) {
-        alert('Veuillez sélectionner au moins un siège.');
+        alert("Veuillez sélectionner au moins un siège.");
         return;
       }
 
       try {
-        const response = await axios.post('/reservations', {
+        const response = await axios.post("/reservations", {
           seance_id: this.selectedSeance.id,
-          seats: this.selectedSeats.map(seat => seat.nom),
+          seats: this.selectedSeats.map((seat) => seat.nom),
         });
 
         if (response.data.success) {
-          alert('Réservation confirmée !');
-          this.$emit('close');               // close modal
-          this.$emit('reservation-made');    // notify parent to refresh seats
+          alert("Réservation confirmée !");
+          this.$emit("close");
+          this.$emit("reservation-made");
         }
       } catch (error) {
         if (error.response && error.response.status === 409) {
           alert(error.response.data.message);
         } else if (error.response && error.response.status === 422) {
-          alert('Données invalides pour la réservation.');
+          alert("Données invalides pour la réservation.");
           console.error(error.response.data.errors);
         } else {
           console.error(error);
-          alert('Erreur lors de la réservation.');
+          alert("Erreur lors de la réservation.");
         }
       }
     },

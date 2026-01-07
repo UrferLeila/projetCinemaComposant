@@ -23,7 +23,6 @@ class Film extends Model
     {
         static::deleting(function ($film) {
             foreach ($film->seances as $seance) {
-                // Delete reservations and reserved seats
                 foreach ($seance->reservations as $reservation) {
                     $reservation->reservationSieges()->delete();
                     $reservation->delete();

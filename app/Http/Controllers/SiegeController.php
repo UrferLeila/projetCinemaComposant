@@ -37,7 +37,6 @@ class SiegeController extends Controller
             'prix_type' => 'sometimes|string|exists:prix,type',
             'salle_id' => 'sometimes|integer|exists:salles,id',
         ]);
-
         $siege->update($request->only(['prix_type', 'salle_id']));
         return response()->json($siege, 200);
     }

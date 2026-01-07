@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Seance;
 use App\Models\ReservationSiege;
-use App\Models\Siege;
 
 class SeanceController extends Controller
 {
@@ -18,11 +17,9 @@ class SeanceController extends Controller
     public function show(string $id)
     {
         $seance = Seance::with(['film', 'salle'])->find($id);
-
         if (!$seance) {
             return response()->json(['message' => 'Seance not found'], 404);
         }
-
         return response()->json($seance, 200);
     }
 
@@ -64,15 +61,11 @@ class SeanceController extends Controller
         return response()->json(['message' => 'Seance not found'], 404);
     }
 
-    // Delete reservations and their reserved seats
     foreach ($seance->reservations as $reservation) {
-        $reservation->reservationSieges()->delete(); // delete reserved seats
-        $reservation->delete(); // delete reservation
+        $reservation->reservationSieges()->delete(); 
+        $reservation->delete(); 
     }
-
-    // Delete the seance itself
     $seance->delete();
-
     return response()->json(['message' => 'Seance and all related reservations deleted'], 200);
 }
 
@@ -80,22 +73,16 @@ class SeanceController extends Controller
     public function seats(string $id)
     {
         $seance = Seance::with('salle.sieges')->findOrFail($id);
-
         $sieges = $seance->salle->sieges;
-
-        // Récupère les sièges déjà réservés pour cette séance
         $reservedSieges = ReservationSiege::whereIn('reservation_id', function($query) use ($id) {
             $query->select('id')
                 ->from('reservations')
                 ->where('seance_id', $id);
         })->pluck('siege_nom')->toArray();
-
-        // Ajoute un champ `occupied` à chaque siège
         $sieges = $sieges->map(function($siege) use ($reservedSieges) {
             $siege->occupied = in_array($siege->nom, $reservedSieges);
             return $siege;
         });
-
         return response()->json($sieges);
     }
 }

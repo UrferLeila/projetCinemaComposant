@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       reservations: [],
-      films: {}, // film_id -> film title
+      films: {},
       loading: true,
       error: null,
     };
@@ -53,20 +53,17 @@ export default {
       try {
         this.loading = true;
 
-        // fetch reservations
         const resResponse = await fetch("/reservations/");
         if (!resResponse.ok) throw new Error("Impossible de charger les réservations");
         this.reservations = await resResponse.json();
 
-        // fetch films
         const filmsResponse = await fetch("/film/all");
         if (!filmsResponse.ok) throw new Error("Impossible de charger les films");
         const filmsArray = await filmsResponse.json();
 
-        // map film IDs to titles
         this.films = {};
         filmsArray.forEach((f) => {
-          this.films[f.id] = f.titre; // <-- use 'titre', not 'title'
+          this.films[f.id] = f.titre;
         });
       } catch (err) {
         this.error = err.message;

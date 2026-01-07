@@ -13,7 +13,7 @@ class SiegeFactory extends Factory
         $salle = Salle::inRandomOrder()->first() ?? Salle::factory()->create();
 
         return [
-            'nom' => $this->faker->unique()->word, // string PK
+            'nom' => $this->faker->unique()->word,
             'prix_type' => $prix->type,
             'salle_id' => $salle->id,
         ];

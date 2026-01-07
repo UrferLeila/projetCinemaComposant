@@ -16,7 +16,6 @@ class ReservationSiegeController extends Controller
     public function show(ReservationSiege $reservationSiege)
     {
         $reservationSiege->load(['siege', 'reservation']);
-        
         return response()->json($reservationSiege, 200);
     }
 
@@ -30,7 +29,6 @@ class ReservationSiegeController extends Controller
         $reservationSiege = ReservationSiege::create(
             $request->only(['siege_nom', 'reservation_id'])
         );
-
         return response()->json($reservationSiege, 201);
     }
 

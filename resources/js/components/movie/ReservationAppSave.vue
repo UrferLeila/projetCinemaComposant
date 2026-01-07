@@ -8,7 +8,6 @@
   </div>
 
   <div class="header-container" v-else>
-    <!-- Movie Info -->
     <img class="poster-square" :src="movie.image" />
     <div>
       <h1 class="h1">Choisir une place</h1>
@@ -21,7 +20,6 @@
       <button class="btn-red" @click="openConnection">Réserver</button>
     </div>
 
-    <!-- Seance Selection -->
     <div class="selection-column">
       <h1 class="h1-center">Choisir la séance</h1>
       <div class="header-center">
@@ -37,7 +35,6 @@
       </div>
     </div>
 
-    <!-- Seats Layout -->
     <div class="seats-wrapper">
       <!-- Legend -->
       <div class="legend-container">
@@ -59,7 +56,6 @@
         </div>
       </div>
 
-      <!-- Seat Rows -->
       <div
         v-for="(row, rowIndex) in seatRows"
         :key="rowIndex"
@@ -86,7 +82,6 @@
     </div>
   </div>
 
-  <!-- Details Modal -->
   <Details
     v-if="showDetails"
     @close="closeAll"
@@ -123,10 +118,9 @@ export default {
   methods: {
     refreshSeats() {
       this.loadOccupiedSeats(this.selectedSeance.id);
-      this.selectedSeats = []; // clear selected seats
+      this.selectedSeats = [];
     },
 
-    // Format seance for display
     formatSeance(seance) {
       if (!seance) return "";
       const date = new Date(seance.date).toLocaleDateString("fr-CH", {
@@ -138,7 +132,6 @@ export default {
       return `${date}, ${seance.heure}`;
     },
 
-    // Load authentication status
     async loadIsAuth() {
       try {
         const response = await fetch("/api/isAuth");
@@ -150,7 +143,6 @@ export default {
       }
     },
 
-    // Load occupied seats for selected seance
     async loadOccupiedSeats(seanceId) {
       try {
         const res = await fetch(`/seance/${seanceId}/occupied`);
@@ -165,7 +157,6 @@ export default {
       }
     },
 
-    // When user selects a seance
     selectSeance(seance) {
       this.selectedSeance = seance;
       this.selectedSeats = [];
@@ -182,13 +173,12 @@ export default {
 
       const index = this.selectedSeats.findIndex((s) => s.nom === seat.nom);
       if (index !== -1) {
-        this.selectedSeats.splice(index, 1); // Remove seat
+        this.selectedSeats.splice(index, 1);
       } else {
-        this.selectedSeats.push(seat); // Add full seat object
+        this.selectedSeats.push(seat);
       }
     },
 
-    // Organize seats into rows for display
     organizeSeats() {
       const vipSeats = this.seats.filter((s) => s.prix?.type === "vip");
       const normalSeats = this.seats.filter((s) => s.prix?.type !== "vip");
@@ -202,7 +192,6 @@ export default {
       }
     },
 
-    // Open Details modal
     openConnection() {
       if (!this.selectedSeance || this.selectedSeats.length === 0) {
         alert("Veuillez sélectionner au moins une séance et un siège.");
@@ -224,20 +213,17 @@ export default {
   async mounted() {
     this.loading = true;
     try {
-      // Load all seats
       const seatsRes = await fetch("/siege");
       if (!seatsRes.ok) throw new Error("Impossible de charger les sièges");
       this.seats = await seatsRes.json();
       this.organizeSeats();
 
-      // Load movie
       const filmRes = await fetch(`/film/${this.id}`);
       if (!filmRes.ok) throw new Error("Impossible de charger le film");
       const filmData = await filmRes.json();
       this.movie = filmData;
       this.seances = filmData.seances || [];
 
-      // Load auth status
       await this.loadIsAuth();
     } catch (err) {
       this.error = err.message;

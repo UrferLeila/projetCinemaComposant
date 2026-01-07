@@ -16,7 +16,6 @@ class FilmController extends Controller
     public function show(string $id)
     {
         $film = Film::with('seances')->find($id);
-
         if (!$film) {
             return response()->json(['message' => 'Film not found'], 404);
         }
@@ -43,13 +42,10 @@ class FilmController extends Controller
    public function destroy($id)
 {
     $film = Film::find($id);
-
     if (!$film) {
         return response()->json(['message' => 'Film not found'], 404);
     }
-
-    $film->delete(); // will delete all seances and their reservations automatically
-
+    $film->delete(); 
     return response()->json(['message' => 'Film and all related seances/reservations deleted successfully.']);
 }
 

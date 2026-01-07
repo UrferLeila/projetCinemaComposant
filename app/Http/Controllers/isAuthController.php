@@ -9,7 +9,6 @@ class IsAuthController extends Controller
 {
     public function index()
     {
-        // Return true if user is logged in, false otherwise
         return response()->json(Auth::check(), 200);
     }
 }

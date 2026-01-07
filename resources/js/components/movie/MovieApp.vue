@@ -3,29 +3,24 @@
     <div class="header">
       <h2 class="title-small">Programme du moment</h2>
 
-      <!-- Admin Add Movie Button -->
       <button v-if="isAdmin" class="btn-add2" @click="goAddMovie">
         <i class="fa-solid fa-plus"></i> Ajouter un film
       </button>
     </div>
 
-    <!-- Loading -->
     <div v-if="loading">
       <p class="title-small">Chargement des films…</p>
     </div>
 
-    <!-- Error -->
     <div v-else-if="error">
       <p>Erreur : {{ error }}</p>
     </div>
 
-    <!-- Movies -->
     <div class="container image-container" v-else>
       <div class="item" v-for="movie in movies" :key="movie.id">
         <div class="image-wrapper">
           <img :src="movie.image" />
 
-          <!-- Admin Edit -->
           <span
             v-if="isAdmin"
             class="top-icon-edit"
@@ -35,12 +30,7 @@
             <i class="fa-solid fa-pen"></i>
           </span>
 
-          <!-- Admin Delete -->
-          <span
-            v-if="isAdmin"
-            class="top-icon-delete"
-            @click="deleteFilm(movie.id)"
-          >
+          <span v-if="isAdmin" class="top-icon-delete" @click="deleteFilm(movie.id)">
             <i class="fa-solid fa-trash"></i>
           </span>
         </div>
@@ -50,9 +40,7 @@
           <h3>{{ movie.auteur }}</h3>
         </div>
 
-        <button class="btn-red" @click="goReservation(movie.id)">
-          Réserver
-        </button>
+        <button class="btn-red" @click="goReservation(movie.id)">Réserver</button>
       </div>
     </div>
   </div>
@@ -101,8 +89,7 @@ export default {
       try {
         await axios.delete(`/film/${id}`);
 
-        // Remove from UI without reload
-        this.movies = this.movies.filter(movie => movie.id !== id);
+        this.movies = this.movies.filter((movie) => movie.id !== id);
       } catch (err) {
         console.error(err);
         alert("Erreur lors de la suppression du film.");
