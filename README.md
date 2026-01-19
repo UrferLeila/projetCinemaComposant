@@ -6,7 +6,7 @@ Voici notre projet simulant un cinéma fictif : Le Palace.
 Permettant de réserver des sièges, en fonction des séances des films.
 Elle permet aussi une gestion admin.
 
-## Fichiers annexes
+## Fichiers annexes (/annexes a la racine du projet)
 
 - `annexes/VisualCppRedist_AIO_x86_x64.exe`  
   → Package Microsoft Visual C++ Redistributable tout-en-un (inclut les versions 32 bits (x86) et 64 bits (x64), recommandé si vous n’êtes pas sûr de l’architecture requise)
