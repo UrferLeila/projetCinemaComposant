@@ -6,19 +6,30 @@ Voici notre projet simulant un cinéma fictif : Le Palace.
 Permettant de réserver des sièges, en fonction des séances des films.
 Elle permet aussi une gestion admin.
 
+## Fichiers annexes
+
+- `annexes/VisualCppRedist_AIO_x86_x64.exe`  
+  → Package Microsoft Visual C++ Redistributable tout-en-un (inclut les versions 32 bits (x86) et 64 bits (x64), recommandé si vous n’êtes pas sûr de l’architecture requise)
+
+- `annexes/vcredist2015_2017_2019_2022_x64.exe`  
+  → Package Microsoft Visual C++ Redistributable 2015–2022 (64 bits), requis pour les systèmes Windows 64 bits
+
+- `annexes/vcredist2015_2017_2019_2022_x86.exe`  
+  → Package Microsoft Visual C++ Redistributable 2015–2022 (32 bits), requis pour les applications 32 bits, même sur un système Windows 64 bits
+
 ## Prérequis
 
 - Installer node-js
-- Installer wampserer (Voir la parti installation si besoin)
+- Installer wampserer (Voir la partie installation si besoin)
 - Installer composer
 
 ## Installation de WampServer
 
 1. Télécharger l'installeur wamp sur son site officiel.  
 
-2. Si lors de  installation une fenêtre d'erreur vous indique qu'il vous manques des packages VC++ executer les exe si join 
+2. Si lors de  l'installation une fenêtre d'erreur vous indique qu'il vous manque des packages VC++, exécutez les fichiers exe ci-joint. 
 
-3. Aller dans les variable denvironement et ajouter php 08.04.15 dans les variable paths global (C:\wamp64\bin\php\08.04.15)
+3. Aller dans les variable denvironement et ajouter php 08.04.15 dans les variable paths global (C:\wamp64\bin\php\08.04.15).
 
 ## Installation
 
