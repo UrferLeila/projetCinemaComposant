@@ -24,7 +24,7 @@ Elle permet aussi une gestion admin.
 
 ### 1. Cloner le dépôt :
 
-   git clone <url-du-repository>
+   git clone https://github.com/ceffDptInfo/projetCinema.git
 
 ### 2. Env.dev :
 
