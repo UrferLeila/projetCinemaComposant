@@ -17,13 +17,14 @@
         </p>
 
         <p>
-          <strong>Total :</strong> {{ res.total || res.reservation_sieges.length * 10 }} €
+          <strong>Total :</strong>
+          {{ res.total || res.reservation_sieges.length * 10 }} CHF
         </p>
       </div>
     </div>
 
     <div class="cart-total" v-if="reservations.length">
-      <p><strong>Total général :</strong> {{ totalPrice }} €</p>
+      <p><strong>Total général :</strong> {{ totalPrice }} CHF</p>
     </div>
     <p v-else>Vous n'avez aucune réservation.</p>
   </div>
@@ -35,7 +36,7 @@ export default {
   data() {
     return {
       reservations: [],
-      films: {}, 
+      films: {},
       loading: true,
       error: null,
     };
@@ -63,7 +64,7 @@ export default {
 
         this.films = {};
         filmsArray.forEach((f) => {
-          this.films[f.id] = f.titre; 
+          this.films[f.id] = f.titre;
         });
       } catch (err) {
         this.error = err.message;

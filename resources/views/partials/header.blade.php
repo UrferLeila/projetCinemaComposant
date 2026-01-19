@@ -10,7 +10,6 @@
             @auth
                 <div class="profile-dropdown">
                     <button class="profile-btn" id="profileBtn">
-                        {{-- <img src="https://picsum.photos/40" alt="Profile Picture" class="profile-pic"> --}}
                         <span class="profile-name">{{ Auth::user()->name }}</span>
                         <span class="arrow">&#9662;</span>
                     </button>

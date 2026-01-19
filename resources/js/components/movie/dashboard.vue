@@ -2,12 +2,10 @@
   <div class="movie-stats">
     <h2 class="title-small">Statistiques & performances</h2>
 
-    <!-- Loading / Error -->
     <div v-if="loading" class="center">Chargement…</div>
     <div v-else-if="error" class="center error">{{ error }}</div>
 
     <div v-else>
-      <!-- KPI -->
       <div class="kpi-grid">
         <div class="kpi-card">
           <span> Revenu total</span>
@@ -27,7 +25,6 @@
         </div>
       </div>
 
-      <!-- Sort -->
       <div class="sort-bar">
         <label>Trier par :</label>
         <select v-model="sortBy">
@@ -36,7 +33,6 @@
         </select>
       </div>
 
-      <!-- Top 3 (ONLY when ranking) -->
       <div v-if="isRankingMode" class="top-three">
         <div
           v-for="(movie, index) in sortedMovies.slice(0, 3)"
@@ -51,13 +47,9 @@
             <p>Billet vendu : {{ movie.places_vendues }}</p>
             <p>Revenu : {{ movie.revenu.toFixed(2) }} CHF</p>
 
-            <!-- Part du revenu total -->
-            <p> Part du revenu : {{ revenueShare(movie) }}%</p>
+            <p>Part du revenu : {{ revenueShare(movie) }}%</p>
             <div class="revenue-bar">
-              <div
-                class="bar-fill"
-                :style="{ width: revenueShare(movie) + '%' }"
-              />
+              <div class="bar-fill" :style="{ width: revenueShare(movie) + '%' }" />
             </div>
 
             <div class="admin-actions">
@@ -68,16 +60,9 @@
         </div>
       </div>
 
-      <!-- Movies list -->
       <div class="cards-container">
-        <div
-          v-for="(movie, index) in displayedMovies"
-          :key="movie.id"
-          class="movie-card"
-        >
-          <div v-if="isRankingMode" class="rank">
-            #{{ index + 4 }}
-          </div>
+        <div v-for="(movie, index) in displayedMovies" :key="movie.id" class="movie-card">
+          <div v-if="isRankingMode" class="rank">#{{ index + 4 }}</div>
 
           <img :src="movie.image" class="movie-image" />
 
@@ -87,20 +72,13 @@
             <p>Billet vendu : {{ movie.places_vendues }}</p>
             <p>Revenu : {{ movie.revenu.toFixed(2) }} CHF</p>
 
-            <p
-              v-if="isRankingMode && movie.revenu < maxRevenue * 0.2"
-              class="warning"
-            >
+            <p v-if="isRankingMode && movie.revenu < maxRevenue * 0.2" class="warning">
               ⚠ Faible revenues
             </p>
 
-            <!-- Part du revenu total -->
-            <p> Part du revenu : {{ revenueShare(movie) }}%</p>
+            <p>Part du revenu : {{ revenueShare(movie) }}%</p>
             <div class="revenue-bar">
-              <div
-                class="bar-fill"
-                :style="{ width: revenueShare(movie) + '%' }"
-              />
+              <div class="bar-fill" :style="{ width: revenueShare(movie) + '%' }" />
             </div>
 
             <div class="admin-actions">
@@ -138,14 +116,10 @@ export default {
       });
     },
     displayedMovies() {
-      return this.isRankingMode
-        ? this.sortedMovies.slice(3)
-        : this.sortedMovies;
+      return this.isRankingMode ? this.sortedMovies.slice(3) : this.sortedMovies;
     },
     maxRevenue() {
-      return this.movies.length
-        ? Math.max(...this.movies.map(m => m.revenu))
-        : 0;
+      return this.movies.length ? Math.max(...this.movies.map((m) => m.revenu)) : 0;
     },
     totalRevenue() {
       return this.movies.reduce((sum, m) => sum + m.revenu, 0);
@@ -159,14 +133,11 @@ export default {
       try {
         const res = await axios.get("/admin/film-stats");
 
-        this.movies = res.data.map(film => {
+        this.movies = res.data.map((film) => {
           const places_vendues = film.seances.reduce((s, seance) => {
             return (
               s +
-              seance.reservations.reduce(
-                (r, res) => r + res.reservation_sieges.length,
-                0
-              )
+              seance.reservations.reduce((r, res) => r + res.reservation_sieges.length, 0)
             );
           }, 0);
 
@@ -183,9 +154,7 @@ export default {
       }
     },
     revenueShare(movie) {
-      return this.totalRevenue
-        ? Math.round((movie.revenu / this.totalRevenue) * 100)
-        : 0;
+      return this.totalRevenue ? Math.round((movie.revenu / this.totalRevenue) * 100) : 0;
     },
     topCardBg(i) {
       if (i === 0) return "linear-gradient(135deg,#FFD700,#FFC107)";
@@ -204,5 +173,3 @@ export default {
   },
 };
 </script>
-
-
