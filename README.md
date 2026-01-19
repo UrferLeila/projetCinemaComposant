@@ -9,13 +9,13 @@ Elle permet aussi une gestion admin.
 ## Fichiers annexes (/annexes a la racine du projet)
 
 - `annexes/VisualCppRedist_AIO_x86_x64.exe`  
-  → Package Microsoft Visual C++ Redistributable tout-en-un (inclut les versions 32 bits (x86) et 64 bits (x64), recommandé si vous n’êtes pas sûr de l’architecture requise)
+  → Package Microsoft Visual C++ Redistributable tout-en-un (inclut les versions 32 bits (x86) et 64 bits (x64).
 
 - `annexes/vcredist2015_2017_2019_2022_x64.exe`  
-  → Package Microsoft Visual C++ Redistributable 2015–2022 (64 bits), requis pour les systèmes Windows 64 bits
+  → Package Microsoft Visual C++ Redistributable 2015–2022 (64 bits), requis pour les systèmes Windows 64 bits.
 
 - `annexes/vcredist2015_2017_2019_2022_x86.exe`  
-  → Package Microsoft Visual C++ Redistributable 2015–2022 (32 bits), requis pour les applications 32 bits, même sur un système Windows 64 bits
+  → Package Microsoft Visual C++ Redistributable 2015–2022 (32 bits), requis pour les applications 32 bits, même sur un système Windows 64 bits.
 
 ## Prérequis
 
