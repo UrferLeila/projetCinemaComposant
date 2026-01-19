@@ -48,23 +48,28 @@ Elle permet aussi une gestion admin.
 ### 4. Installer npm + vue : 
     
     npm install
+    
     npm install vue axios
+
     npm install @vitejs/plugin-vue
 
 ### 5. Créer la base de données :
 
     php artisan db:wipe
+
     php artisan migrate 
+
     php artisan db:seed DatabaseSeeder
 
 ### 6. Lancer les deux serveurs :
 
     npm run dev
+
     php artisan serve 
 
 ### 7. Navigation :
 
-    pour voir s'afficher l'application ajouter un /vie a l'url (http://127.0.0.1:8000/vue)
+    pour voir s'afficher l'application ajouter un /vue a l'url (http://127.0.0.1:8000/vue)
 
 
 
