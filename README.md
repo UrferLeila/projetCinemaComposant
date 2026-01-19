@@ -35,7 +35,7 @@ Elle permet aussi une gestion admin.
 
 ### 1. Cloner le dépôt :
 
-   git clone https://github.com/ceffDptInfo/projetCinema.git
+    git clone "https://github.com/ceffDptInfo/projetCinema.git"
 
 ### 2. Env.dev :
 
@@ -53,7 +53,7 @@ Elle permet aussi une gestion admin.
 
 ### 5. Créer la base de données :
 
-    php artisan db:seed
+    php artisan db:wipe
     php artisan migrate 
     php artisan db:seed DatabaseSeeder
 
@@ -61,6 +61,10 @@ Elle permet aussi une gestion admin.
 
     npm run dev
     php artisan serve 
+
+### 7. Navigation :
+
+    pour voir s'afficher l'application ajouter un /vie a l'url (http://127.0.0.1:8000/vue)
 
 
 
