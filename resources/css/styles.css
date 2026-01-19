@@ -1251,6 +1251,7 @@ h3 {
 }
 
 /* Top 3 cards */
+
 .top-three {
     display: flex;
     gap: 25px;
