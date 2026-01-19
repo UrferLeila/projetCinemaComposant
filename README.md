@@ -27,7 +27,7 @@ Elle permet aussi une gestion admin.
 
 1. Télécharger l'installeur wamp sur son site officiel.  
 
-2. Si lors de  l'installation une fenêtre d'erreur vous indique qu'il vous manque des packages VC++, exécutez les fichiers exe ci-joint. 
+2. Si lors de  l'installation une fenêtre d'erreur vous indique qu'il vous manque des packages VC++, exécutez les fichiers exe ci-joint dans annexes. 
 
 3. Aller dans les variable denvironement et ajouter php 08.04.15 dans les variable paths global (C:\wamp64\bin\php\08.04.15).
 
