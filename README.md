@@ -22,31 +22,31 @@ Elle permet aussi une gestion admin.
 
 ## Installation
 
-1. Cloner le dépôt :
+### 1. Cloner le dépôt :
 
    git clone <url-du-repository>
 
-2. Env.dev :
+### 2. Env.dev :
 
     Copier le fichier env.dev coller le a la racine du projet puis renommer le en .env
 
-3. Installer composer : 
+### 3. Installer composer : 
     
     composer install 
 
-4. Installer npm + vue : 
+### 4. Installer npm + vue : 
     
     npm install
     npm install vue axios
     npm install @vitejs/plugin-vue
 
-5. Créer la base de données :
+### 5. Créer la base de données :
 
     php artisan db:seed
     php artisan migrate 
     php artisan db:seed DatabaseSeeder
 
-6. Lancer les deux serveurs :
+### 6. Lancer les deux serveurs :
 
     npm run dev
     php artisan serve 
