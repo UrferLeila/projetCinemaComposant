@@ -43,10 +43,11 @@ export default {
   },
   computed: {
     totalPrice() {
-      return this.reservations.reduce(
-        (sum, res) => sum + (res.total || res.reservation_sieges.length * 10),
-        0
-      );
+      const priceMap = { normal: 20, vip: 45 };
+      return this.reservations.reduce((sum, seat) => {
+        const type = seat.prix_type || seat.prix?.type || "normal";
+        return sum + (priceMap[type] || 0);
+      }, 0);
     },
   },
   methods: {
