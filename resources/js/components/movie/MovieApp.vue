@@ -25,31 +25,17 @@
       <p>Erreur : {{ error }}</p>
     </div>
 
-    <div class="container image-container" v-else>
-      <div class="item" v-for="movie in movies" :key="movie.id">
-        <div class="image-wrapper">
-          <img :src="movie.image" />
-
-          <span
-            v-if="isAdmin"
-            class="top-icon-edit"
-            title="Modifier le film"
-            @click="goFilmModif(movie.id)"
-          >
-            <i class="fa-solid fa-pen"></i>
-          </span>
-
-          <span v-if="isAdmin" class="top-icon-delete" @click="deleteFilm(movie.id)">
-            <i class="fa-solid fa-trash"></i>
-          </span>
-        </div>
-
-        <div class="info">
-          <h3>{{ movie.titre }}</h3>
-          <h3>{{ movie.auteur }}</h3>
-        </div>
-
-        <button class="btn-red" @click="goReservation(movie.id)">Réserver</button>
+    <div v-else>
+      <div class="container image-container">
+        <FilmCard
+          v-for="movie in movies"
+          :key="movie.id"
+          :movie="movie"
+          :isAdmin="isAdmin"
+          @edit="goFilmModif"
+          @delete="deleteFilm"
+          @reserve="goReservation"
+        />
       </div>
     </div>
   </div>
@@ -57,9 +43,14 @@
 
 <script>
 import axios from "axios";
+import FilmCard from "./FilmCard.vue";
 
 export default {
   name: "MovieProgram",
+
+  components: {
+    FilmCard,
+  },
 
   data() {
     return {
@@ -99,7 +90,6 @@ export default {
         await axios.delete(`/film/${id}`);
         this.movies = this.movies.filter((movie) => movie.id !== id);
       } catch (err) {
-        console.error(err);
         alert("Erreur lors de la suppression du film.");
       }
     },

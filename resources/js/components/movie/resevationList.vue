@@ -2,67 +2,77 @@
   <div class="reservation-cart">
     <h2>Résumé de vos réservations</h2>
 
-    <div class="reservation-item" v-for="res in reservations" :key="res.id">
-      <div class="movie-info">
-        <h3>{{ films[res.seance.film_id] || "Film inconnu" }}</h3>
-        <p>
-          <strong>Date & Heure :</strong> {{ res.seance.date }} à {{ res.seance.heure }}
-        </p>
-      </div>
+    <!-- Résumer Card Component -->
+    <ResumerCard :films="films" :reservations="reservations" />
 
-      <div class="seats-info">
-        <p>
-          <strong>Places réservées :</strong>
-          {{ res.reservation_sieges.map((s) => s.siege_nom).join(", ") }}
-        </p>
-
-        <p>
-          <strong>Total :</strong>
-          {{ res.total || res.reservation_sieges.length * 10 }} CHF
-        </p>
-      </div>
-    </div>
-
+    <!-- Total général -->
     <div class="cart-total" v-if="reservations.length">
       <p><strong>Total général :</strong> {{ totalPrice }} CHF</p>
     </div>
     <p v-else>Vous n'avez aucune réservation.</p>
+
+    <!-- Error / Loading -->
+    <p v-if="loading">Chargement...</p>
+    <p v-if="error" style="color:red">{{ error }}</p>
   </div>
 </template>
 
 <script>
+import ResumerCard from "./ResumerCard.vue";
+
 export default {
   name: "ReservationSummary",
+  components: { ResumerCard },
+
   data() {
     return {
       reservations: [],
-      films: {},
-      loading: true,
+      films: {}, // films as an object map { id: titre }
+      loading: false,
       error: null,
     };
   },
+
   computed: {
     totalPrice() {
-      const priceMap = { normal: 20, vip: 45 };
-      return this.reservations.reduce((sum, seat) => {
-        const type = seat.prix_type || seat.prix?.type || "normal";
-        return sum + (priceMap[type] || 0);
-      }, 0);
+      return this.reservations.reduce(
+        (sum, res) => sum + (res.total_price || 0),
+        0
+      );
     },
   },
+
   methods: {
     async fetchData() {
       try {
         this.loading = true;
 
-        const resResponse = await fetch("/reservations/");
-        if (!resResponse.ok) throw new Error("Impossible de charger les réservations");
-        this.reservations = await resResponse.json();
+        // 1️⃣ Fetch reservations
+        const resResponse = await fetch("/api/reservations");
+        if (!resResponse.ok)
+          throw new Error("Impossible de charger les réservations");
+        const reservationsData = await resResponse.json();
 
+        // 2️⃣ Fetch total price for each reservation
+        const reservationsWithPrice = await Promise.all(
+          reservationsData.map(async (res) => {
+            const priceResponse = await fetch(`/api/totalPrice/${res.id}`);
+            if (!priceResponse.ok)
+              throw new Error(
+                `Impossible de charger le prix pour la réservation ${res.id}`
+              );
+            const priceData = await priceResponse.json();
+            return { ...res, total_price: priceData.total_price };
+          })
+        );
+        this.reservations = reservationsWithPrice;
+
+        // 3️⃣ Fetch films
         const filmsResponse = await fetch("/film/all");
         if (!filmsResponse.ok) throw new Error("Impossible de charger les films");
         const filmsArray = await filmsResponse.json();
 
+        // Map films as object for fast lookup
         this.films = {};
         filmsArray.forEach((f) => {
           this.films[f.id] = f.titre;
@@ -74,6 +84,7 @@ export default {
       }
     },
   },
+
   mounted() {
     this.fetchData();
   },

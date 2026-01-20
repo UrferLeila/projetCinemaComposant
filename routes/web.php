@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IsAuthController;
 use App\Http\Controllers\IsAdminController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TotalPriceController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -23,6 +24,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/api/isAuth', [IsAuthController::class, 'index']);
 
 Route::get('/api/isAdmin', [IsAdminController::class, 'index']);
+
+Route::get('/api/totalPrice/{id}', [TotalPriceController::class, 'show']);
 
 Route::get('/api/reservations', [ReservationController::class, 'index']);
 
