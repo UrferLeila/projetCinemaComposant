@@ -2,8 +2,10 @@
   <div class="seances-section">
     <h3>Modifier les séances</h3>
     <div v-if="localSeances.length === 0" class="no-seances">
-      <p>Aucune séance ajoutée.</p>
-    </div>
+    <p>Aucune séance ajoutée.</p>
+</div>
+
+
 
     <div
       v-for="(seance, index) in localSeances"
@@ -19,7 +21,7 @@
       <button class="btn btn-remove" @click="remove(index)">Supprimer</button>
     </div>
 
-    <button class="btn btn-add-seance" @click="add">+ Ajouter une séance</button>
+    <button class="btn btn-add-seance" @click="add">Ajouter une séance</button>
   </div>
 </template>
 
@@ -29,7 +31,7 @@ export default {
   props: {
     seances: {
       type: Array,
-      required: true,
+      default: [],
     },
   },
   data() {

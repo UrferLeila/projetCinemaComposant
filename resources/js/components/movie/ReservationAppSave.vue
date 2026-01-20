@@ -20,7 +20,7 @@
       @select-seance="selectSeance"
     />
 
-    <div class="seats-wrapper">
+    <!-- <div class="seats-wrapper">
       <div class="legend-container">
         <div class="legend-item">
           <div class="color normal"></div>
@@ -63,7 +63,14 @@
       </div>
 
       <h1 class="h1">Écran</h1>
-    </div>
+    </div> -->
+
+    <SiegeGrid
+      @toggle-seat="toggleSeat"
+      :seatRows="seatRows"
+      :selectedSeats="selectedSeats"
+    />
+
   </div>
 
   <Details
@@ -80,6 +87,7 @@
 import Details from "@/components/movie/Details.vue";
 import SeanceSelector from "@/components/movie/SeanceSelector.vue";
 import ResumeMovie from "@/components/movie/ResumeMovie.vue";
+import SiegeGrid from "@/components/movie/SiegeGrid.vue";
 
 export default {
   props: ["id"],
@@ -87,6 +95,7 @@ export default {
     Details,
     SeanceSelector,
     ResumeMovie,
+    SiegeGrid,
   },
   data() {
     return {
