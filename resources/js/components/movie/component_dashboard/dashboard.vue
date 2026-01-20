@@ -29,9 +29,9 @@
 
 <script>
 import axios from "axios";
-import StatMovie from "./component_dashboard/StatMovie.vue";
-import CardTopThree from "./component_dashboard/CardTopThree.vue";
-import CardRanking from "./component_dashboard/CardRanking.vue";
+import StatMovie from "./StatMovie.vue";
+import CardTopThree from "./CardTopThree.vue";
+import CardRanking from "./CardRanking.vue";
 
 export default {
   components: { StatMovie, CardTopThree, CardRanking },

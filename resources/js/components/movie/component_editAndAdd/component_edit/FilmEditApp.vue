@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import EditMovie from "@/components/movie/EditMovie.vue";
+import EditMovie from "@/components/movie/component_editAndAdd/component_edit/EditMovie.vue";
 
 export default {
   name: "EditMoviePage",

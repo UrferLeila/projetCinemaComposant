@@ -40,7 +40,7 @@
 
 <script>
 import axios from "axios";
-import EditSeance from "@/components/movie/EditSeance.vue";
+import EditSeance from "@/components/movie/component_editAndAdd/EditAndAddSeance.vue";
 
 export default {
   name: "EditMovie",

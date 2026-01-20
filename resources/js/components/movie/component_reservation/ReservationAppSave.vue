@@ -84,10 +84,10 @@
 </template>
 
 <script>
-import Details from "@/components/movie/Details.vue";
-import SeanceSelector from "@/components/movie/SeanceSelector.vue";
-import ResumeMovie from "@/components/movie/ResumeMovie.vue";
-import SiegeGrid from "@/components/movie/SiegeGrid.vue";
+import Details from "@/components/movie/component_reservation/Details.vue";
+import SeanceSelector from "@/components/movie/component_reservation/SeanceSelector.vue";
+import ResumeMovie from "@/components/movie/component_reservation/ResumeMovie.vue";
+import SiegeGrid from "@/components/movie/component_reservation/SiegeGrid.vue";
 
 export default {
   props: ["id"],

@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MovieApp from './components/movie/MovieApp.vue';
-import ReservationApp from './components/movie/ReservationAppSave.vue';
-import FilmEditApp from './components/movie/FilmEditApp.vue';
-import FilmAddApp from './components/movie/FilmAddApp.vue';
-import resevationList from './components/movie/resevationList.vue';
-import dashboard from './components/movie/dashboard.vue';
+import ReservationApp from './components/movie/component_reservation/ReservationAppSave.vue';
+import FilmEditApp from './components/movie/component_editAndAdd/component_edit/FilmEditApp.vue';
+import FilmAddApp from './components/movie/component_editAndAdd/component_add/FilmAddApp.vue';
+import resevationList from './components/movie/component_resume/resevationList.vue';
+import dashboard from './components/movie/component_dashboard/dashboard.vue';
 
 const routes = [
     {

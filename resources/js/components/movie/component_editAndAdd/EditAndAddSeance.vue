@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "EditSeance",
+  name: "EditAndAddSeance",
   props: {
     seances: {
       type: Array,

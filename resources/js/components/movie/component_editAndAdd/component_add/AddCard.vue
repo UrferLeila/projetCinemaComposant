@@ -29,7 +29,7 @@
         <img :src="film.image" alt="Preview" />
       </div>
 
-      <EditSeance/>
+      <EditAndAddSeance/>
 
       <p v-if="error" class="error-msg">{{ error }}</p>
       <p v-if="success" class="success-msg">Film et séances ajoutés avec succès !</p>
@@ -38,18 +38,18 @@
         <button class="btn btn-add" @click="submitFilm">
           Créer le film et ses séances
         </button>
-        <button class="btn btn-cancel" @click="goBack">Annuler</button>
+        <button class="btn btn-add" @click="goBack">Annuler</button>
       </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import EditSeance from "@/components/movie/EditSeance.vue";
+import EditAndAddSeance from "@/components/movie/component_editAndAdd/EditAndAddSeance.vue";
 
 export default {
   components: {
-    EditSeance,
+    EditAndAddSeance,
   },
   data() {
     return {
