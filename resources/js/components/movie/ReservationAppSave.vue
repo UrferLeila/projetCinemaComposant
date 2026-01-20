@@ -8,32 +8,17 @@
   </div>
 
   <div class="header-container" v-else>
-    <img class="poster-square" :src="movie.image" />
-    <div>
-      <h1 class="h1">Choisir une place</h1>
-      <h2 class="h2-title">Film</h2>
-      <h3 class="h3">{{ movie.titre }}</h3>
-      <h2 class="h2-title">Date et Horaire</h2>
-      <h3 class="h3" v-if="selectedSeance">{{ formatSeance(selectedSeance) }}</h3>
-      <h3 class="h3" v-else>Sélectionnez une séance</h3>
+    <ResumeMovie
+      :movie="movie"
+      :selectedSeance="selectedSeance"
+      @reserve="openConnection"
+    />
 
-      <button class="btn-red" @click="openConnection">Réserver</button>
-    </div>
-
-    <div class="selection-column">
-      <h1 class="h1-center">Choisir la séance</h1>
-      <div class="header-center">
-        <button
-          v-for="(seance, index) in seances"
-          :key="index"
-          class="btn-blue"
-          :class="{ selected: selectedSeance === seance }"
-          @click="selectSeance(seance)"
-        >
-          {{ new Date(seance.date).toLocaleDateString("fr-CH") }}, {{ seance.heure }}
-        </button>
-      </div>
-    </div>
+    <SeanceSelector
+      :seances="seances"
+      :selectedSeance="selectedSeance"
+      @select-seance="selectSeance"
+    />
 
     <div class="seats-wrapper">
       <div class="legend-container">
@@ -93,23 +78,24 @@
 
 <script>
 import Details from "@/components/movie/Details.vue";
+import SeanceSelector from "@/components/movie/SeanceSelector.vue";
+import ResumeMovie from "@/components/movie/ResumeMovie.vue";
 
 export default {
   props: ["id"],
   components: {
     Details,
+    SeanceSelector,
+    ResumeMovie,
   },
   data() {
     return {
       isAuth: false,
-      movie: null,
       loading: true,
       error: null,
       seats: [],
       seatRows: [],
       selectedSeats: [],
-      seances: [],
-      selectedSeance: null,
       showDetails: false,
     };
   },
@@ -117,18 +103,7 @@ export default {
   methods: {
     refreshSeats() {
       this.loadOccupiedSeats(this.selectedSeance.id);
-      this.selectedSeats = []; 
-    },
-
-    formatSeance(seance) {
-      if (!seance) return "";
-      const date = new Date(seance.date).toLocaleDateString("fr-CH", {
-        weekday: "long",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
-      return `${date}, ${seance.heure}`;
+      this.selectedSeats = [];
     },
 
     async loadIsAuth() {
@@ -171,9 +146,9 @@ export default {
 
       const index = this.selectedSeats.findIndex((s) => s.nom === seat.nom);
       if (index !== -1) {
-        this.selectedSeats.splice(index, 1); 
+        this.selectedSeats.splice(index, 1);
       } else {
-        this.selectedSeats.push(seat); 
+        this.selectedSeats.push(seat);
       }
     },
 
