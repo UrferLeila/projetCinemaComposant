@@ -18,7 +18,7 @@
 
         <p>
           <strong>Total :</strong>
-          {{ res.total || res.reservation_sieges.length * 10 }} CHF
+          {{ res.total_price }} CHF
         </p>
       </div>
     </div>
@@ -43,11 +43,7 @@ export default {
   },
   computed: {
     totalPrice() {
-      const priceMap = { normal: 20, vip: 45 };
-      return this.reservations.reduce((sum, seat) => {
-        const type = seat.prix_type || seat.prix?.type || "normal";
-        return sum + (priceMap[type] || 0);
-      }, 0);
+      return this.reservations.reduce((sum, res) => sum + (res.total_price || 0), 0);
     },
   },
   methods: {
@@ -55,10 +51,27 @@ export default {
       try {
         this.loading = true;
 
-        const resResponse = await fetch("/reservations/");
+        // 1. Fetch all reservations
+        const resResponse = await fetch("/api/reservations");
         if (!resResponse.ok) throw new Error("Impossible de charger les réservations");
-        this.reservations = await resResponse.json();
+        const reservationsData = await resResponse.json();
 
+        // 2. Fetch total price for each reservation from the API
+        const reservationsWithPrice = await Promise.all(
+          reservationsData.map(async (res) => {
+            const priceResponse = await fetch(`/api/totalPrice/${res.id}`);
+            if (!priceResponse.ok) throw new Error(`Impossible de charger le prix pour la réservation ${res.id}`);
+            const priceData = await priceResponse.json();
+            return {
+              ...res,
+              total_price: priceData.total_price,
+            };
+          })
+        );
+
+        this.reservations = reservationsWithPrice;
+
+        // 3. Fetch films
         const filmsResponse = await fetch("/film/all");
         if (!filmsResponse.ok) throw new Error("Impossible de charger les films");
         const filmsArray = await filmsResponse.json();
