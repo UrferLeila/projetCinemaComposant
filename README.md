@@ -9,13 +9,13 @@ Elle permet aussi une gestion admin.
 ## Fichiers annexes (/annexes a la racine du projet)
 
 - `annexes/VisualCppRedist_AIO_x86_x64.exe`  
-  → Package Microsoft Visual C++ Redistributable tout-en-un (inclut les versions 32 bits (x86) et 64 bits (x64), recommandé si vous n’êtes pas sûr de l’architecture requise)
+  → Package Microsoft Visual C++ Redistributable tout-en-un inclut les versions 32 bits (x86) et 64 bits (x64).
 
 - `annexes/vcredist2015_2017_2019_2022_x64.exe`  
-  → Package Microsoft Visual C++ Redistributable 2015–2022 (64 bits), requis pour les systèmes Windows 64 bits
+  → Package Microsoft Visual C++ Redistributable 2015–2022 (64 bits), requis pour les systèmes Windows 64 bits.
 
 - `annexes/vcredist2015_2017_2019_2022_x86.exe`  
-  → Package Microsoft Visual C++ Redistributable 2015–2022 (32 bits), requis pour les applications 32 bits, même sur un système Windows 64 bits
+  → Package Microsoft Visual C++ Redistributable 2015–2022 (32 bits), requis pour les applications 32 bits, même sur un système Windows 64 bits.
 
 ## Prérequis
 
@@ -35,7 +35,7 @@ Elle permet aussi une gestion admin.
 
 ### 1. Cloner le dépôt :
 
-   git clone https://github.com/ceffDptInfo/projetCinema.git
+    git clone "https://github.com/ceffDptInfo/projetCinema.git"
 
 ### 2. Env.dev :
 
@@ -48,19 +48,28 @@ Elle permet aussi une gestion admin.
 ### 4. Installer npm + vue : 
     
     npm install
+    
     npm install vue axios
+
     npm install @vitejs/plugin-vue
 
 ### 5. Créer la base de données :
 
-    php artisan db:seed
+    php artisan db:wipe
+
     php artisan migrate 
+
     php artisan db:seed DatabaseSeeder
 
 ### 6. Lancer les deux serveurs :
 
     npm run dev
+
     php artisan serve 
+
+### 7. Navigation :
+
+    pour voir s'afficher l'application ajouter un /vue a l'url (http://127.0.0.1:8000/vue)
 
 
 
