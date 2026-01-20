@@ -50,7 +50,7 @@
 
 <script>
 export default {
-  name: "SeatsLayout",
+  name: "SiegeGrid",
 
   props: {
     seatRows: {
