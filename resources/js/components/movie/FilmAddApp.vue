@@ -58,7 +58,7 @@
         <button class="btn btn-add" @click="submitFilm">
           Créer le film et ses séances
         </button>
-        <button class="btn btn-cancel" @click="goBack">Annuler</button>
+        <button class="btn btn-add" @click="goBack">Annuler</button>
       </div>
     </div>
   </div>
@@ -75,7 +75,7 @@ export default {
         auteur: "",
         image: "",
       },
-      seances: [], 
+      seances: [],
       error: null,
       success: false,
     };
@@ -110,7 +110,7 @@ export default {
 
       try {
         const res = await axios.post("/film/add", this.film);
-        const filmId = res.data.id; 
+        const filmId = res.data.id;
 
         for (let s of this.seances) {
           await axios.post("/seance/add", { ...s, film_id: filmId });

@@ -5,17 +5,17 @@
 
       <button
         v-if="isAdmin"
-        class="btn-add2"
+        class="btn-add"
         @click="goStats"
         style="position: absolute; top: 0; right: 0"
       >
         <i class="fa-solid fa-chart-simple"></i> Statistiques
       </button>
 
-      <button v-if="isAdmin" class="btn-add2" @click="goAddMovie">
+      <button v-if="isAdmin" class="btn-add" @click="goAddMovie">
         <i class="fa-solid fa-plus"></i> Ajouter un film
       </button>
-    </div> 
+    </div>
 
     <div v-if="loading">
       <p class="title-small">Chargement des films…</p>

@@ -7,13 +7,8 @@
 
       <div class="movie-info">
         <h3>{{ movie.titre }}</h3>
-        <p>Auteur : {{ movie.auteur }}</p>
         <p>Billet vendu : {{ movie.places_vendues }}</p>
         <p>Revenu : {{ movie.revenu.toFixed(2) }} CHF</p>
-
-        <p v-if="isRankingMode && movie.revenu < maxRevenue * 0.2" class="warning">
-          ⚠ Faible revenues
-        </p>
 
         <p>Part du revenu : {{ revenueShare(movie) }}%</p>
         <div class="revenue-bar">
@@ -22,7 +17,7 @@
 
         <div class="admin-actions">
           <button @click="goReservation(movie.id)">Séances</button>
-          <button @click="goFilmModif(movie.id)">Modifier</button>
+          <button @click="goEdit(movie.id)">Modifier</button>
         </div>
       </div>
     </div>
@@ -50,7 +45,7 @@ export default {
     goReservation(id) {
       this.$router.push(`/reservation/${id}`);
     },
-    goFilmModif(id) {
+    goEdit(id) {
       this.$router.push(`/film/edit/${id}`);
     },
     revenueShare(movie) {

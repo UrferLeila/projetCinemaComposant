@@ -7,7 +7,7 @@
     >
       <div class="rank">#{{ index + 1 }}</div>
       <img :src="movie.image" class="movie-image" />
-      <div class="movie-info dark-text">
+      <div class="movie-info">
         <h3>{{ movie.titre }}</h3>
         <p>Billet vendu : {{ movie.places_vendues }}</p>
         <p>Revenu : {{ movie.revenu.toFixed(2) }} CHF</p>
@@ -19,7 +19,7 @@
 
         <div class="admin-actions">
           <button @click="goReservation(movie.id)">Séances</button>
-          <button @click="goFilmModif(movie.id)">Modifier</button>
+          <button @click="goEdit(movie.id)">Modifier</button>
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@ export default {
     goReservation(id) {
       this.$router.push(`/reservation/${id}`);
     },
-    goFilmModif(id) {
+    goEdit(id) {
       this.$router.push(`/film/edit/${id}`);
     },
     revenueShare(movie) {

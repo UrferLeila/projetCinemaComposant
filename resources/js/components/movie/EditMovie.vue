@@ -33,7 +33,7 @@
       <button class="btn btn-add" @click="submitFilm">
         Mettre à jour le film et ses séances
       </button>
-      <button class="btn btn-cancel" @click="goBack">Annuler</button>
+      <button class="btn btn-add" @click="goBack">Annuler</button>
     </div>
   </div>
 </template>
