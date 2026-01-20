@@ -15,7 +15,7 @@
       <button v-if="isAdmin" class="btn-add2" @click="goAddMovie">
         <i class="fa-solid fa-plus"></i> Ajouter un film
       </button>
-    </div>
+    </div> 
 
     <div v-if="loading">
       <p class="title-small">Chargement des films…</p>
