@@ -43,68 +43,66 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import EditAndAddSeance from "@/components/movie/component_editAndAdd/EditAndAddSeance.vue";
+<script setup>
+import { ref } from "vue"
+import { useRouter } from "vue-router"
+import axios from "axios"
 
-export default {
-  components: {
-    EditAndAddSeance,
-  },
-  data() {
-    return {
-      film: {
-        titre: "",
-        auteur: "",
-        image: "",
-      },
-      seances: [], 
-      error: null,
-      success: false,
-    };
-  },
-  methods: {
-    async submitFilm() {
-      this.error = null;
-      this.success = false;
+import EditAndAddSeance from "@/components/movie/component_editAndAdd/EditAndAddSeance.vue"
 
-      if (!this.film.titre || !this.film.auteur || !this.film.image) {
-        this.error = "Veuillez remplir tous les champs du film.";
-        return;
-      }
+const router = useRouter()
 
-      if (this.seances.length === 0) {
-        this.error = "Vous devez ajouter au moins une séance.";
-        return;
-      }
+const film = ref({
+  titre: "",
+  auteur: "",
+  image: "",
+})
 
-      for (let s of this.seances) {
-        if (!s.date || !s.heure || !s.salle_id) {
-          this.error = "Veuillez remplir toutes les informations des séances.";
-          return;
-        }
-      }
+const seances = ref([])
+const error = ref(null)
+const success = ref(false)
 
-      try {
-        const res = await axios.post("/film/add", this.film);
-        const filmId = res.data.id; 
+async function submitFilm() {
+  error.value = null
+  success.value = false
 
-        for (let s of this.seances) {
-          await axios.post("/seance/add", { ...s, film_id: filmId });
-        }
+  if (!film.value.titre || !film.value.auteur || !film.value.image) {
+    error.value = "Veuillez remplir tous les champs du film."
+    return
+  }
 
-        this.success = true;
-        setTimeout(() => {
-          this.$router.push("/");
-        }, 1200);
-      } catch (err) {
-        console.error(err);
-        this.error = "Erreur lors de l'ajout du film ou des séances.";
-      }
-    },
-    goBack() {
-      this.$router.back();
-    },
-  },
-};
+  if (seances.value.length === 0) {
+    error.value = "Vous devez ajouter au moins une séance."
+    return
+  }
+
+  for (let s of seances.value) {
+    if (!s.date || !s.heure || !s.salle_id) {
+      error.value = "Veuillez remplir toutes les informations des séances."
+      return
+    }
+  }
+
+  try {
+    const res = await axios.post("/film/add", film.value)
+    const filmId = res.data.id
+
+    for (let s of seances.value) {
+      await axios.post("/seance/add", { ...s, film_id: filmId })
+    }
+
+    success.value = true
+
+    setTimeout(() => {
+      router.push("/")
+    }, 1200)
+  } catch (err) {
+    console.error(err)
+    error.value = "Erreur lors de l'ajout du film ou des séances."
+  }
+}
+
+function goBack() {
+  router.back()
+}
 </script>

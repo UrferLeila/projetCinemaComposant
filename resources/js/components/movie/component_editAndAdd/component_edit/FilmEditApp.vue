@@ -4,19 +4,14 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { defineProps } from "vue";
 import EditMovie from "@/components/movie/component_editAndAdd/component_edit/EditMovie.vue";
 
-export default {
-  name: "EditMoviePage",
-  components: {
-    EditMovie,
+const props = defineProps({
+  id: {
+    type: [String, Number],
+    required: true,
   },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true,
-    },
-  },
-};
+});
 </script>

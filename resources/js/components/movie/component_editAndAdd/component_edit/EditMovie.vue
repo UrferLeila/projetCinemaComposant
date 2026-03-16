@@ -38,98 +38,103 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import EditSeance from "@/components/movie/component_editAndAdd/EditAndAddSeance.vue";
+<script setup>
+import { ref, onMounted } from "vue"
+import { useRouter } from "vue-router"
+import axios from "axios"
 
-export default {
-  name: "EditMovie",
-  components: {
-    EditSeance,
-  },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true,
-    },
-  },
-  data() {
-    return {
-      film: {
-        titre: "",
-        auteur: "",
-        image: "",
-      },
-      seances: [],
-      error: null,
-      success: false,
-    };
-  },
-  async created() {
-    try {
-      const res = await axios.get(`/film/${this.id}`);
-      this.film = {
-        titre: res.data.titre,
-        auteur: res.data.auteur,
-        image: res.data.image,
-      };
-      this.seances = res.data.seances || [];
-    } catch (err) {
-      console.error(err);
-      this.error = "Impossible de charger les informations du film.";
+import EditSeance from "@/components/movie/component_editAndAdd/EditAndAddSeance.vue"
+
+const router = useRouter()
+
+const props = defineProps({
+  id: {
+    type: [String, Number],
+    required: true,
+  }
+})
+
+const film = ref({
+  titre: "",
+  auteur: "",
+  image: "",
+})
+
+const seances = ref([])
+const error = ref(null)
+const success = ref(false)
+
+async function fetchFilm() {
+  try {
+    const res = await axios.get(`/film/${props.id}`)
+
+    film.value = {
+      titre: res.data.titre,
+      auteur: res.data.auteur,
+      image: res.data.image,
     }
-  },
-  methods: {
-    async submitFilm() {
-      this.error = null;
-      this.success = false;
 
-      if (!this.film.titre || !this.film.auteur || !this.film.image) {
-        this.error = "Veuillez remplir tous les champs du film.";
-        return;
+    seances.value = res.data.seances || []
+  } catch (err) {
+    console.error(err)
+    error.value = "Impossible de charger les informations du film."
+  }
+}
+
+async function submitFilm() {
+  error.value = null
+  success.value = false
+
+  if (!film.value.titre || !film.value.auteur || !film.value.image) {
+    error.value = "Veuillez remplir tous les champs du film."
+    return
+  }
+
+  for (let s of seances.value) {
+    if (!s.date || !s.heure || !s.salle_id) {
+      error.value = "Veuillez remplir toutes les informations des séances."
+      return
+    }
+  }
+
+  try {
+    await axios.put(`/film/update/${props.id}`, film.value)
+
+    const serverSeanceIds = seances.value.filter((s) => s.id).map((s) => s.id)
+
+    const { data: existingSeances } = await axios.get(`/film/${props.id}`)
+    const existingIds = existingSeances.seances?.map((s) => s.id) || []
+
+    for (let id of existingIds) {
+      if (!serverSeanceIds.includes(id)) {
+        await axios.delete(`/seance/${id}`)
       }
+    }
 
-      for (let s of this.seances) {
-        if (!s.date || !s.heure || !s.salle_id) {
-          this.error = "Veuillez remplir toutes les informations des séances.";
-          return;
-        }
+    for (let s of seances.value) {
+      if (s.id) {
+        await axios.put(`/seance/${s.id}`, s)
+      } else {
+        await axios.post("/seance/add", { ...s, film_id: props.id })
       }
+    }
 
-      try {
-        await axios.put(`/film/update/${this.id}`, this.film);
+    success.value = true
 
-        const serverSeanceIds = this.seances.filter((s) => s.id).map((s) => s.id);
+    setTimeout(() => {
+      router.push("/")
+    }, 1200)
+  } catch (err) {
+    console.error(err)
+    error.value = "Erreur lors de la mise à jour du film ou des séances."
+  }
+}
 
-        const { data: existingSeances } = await axios.get(`/film/${this.id}`);
-        const existingIds = existingSeances.seances?.map((s) => s.id) || [];
+function goBack() {
+  router.back()
+}
 
-        for (let id of existingIds) {
-          if (!serverSeanceIds.includes(id)) {
-            await axios.delete(`/seance/${id}`);
-          }
-        }
-
-        for (let s of this.seances) {
-          if (s.id) {
-            await axios.put(`/seance/${s.id}`, s);
-          } else {
-            await axios.post("/seance/add", { ...s, film_id: this.id });
-          }
-        }
-
-        this.success = true;
-        setTimeout(() => {
-          this.$router.push("/");
-        }, 1200);
-      } catch (err) {
-        console.error(err);
-        this.error = "Erreur lors de la mise à jour du film ou des séances.";
-      }
-    },
-    goBack() {
-      this.$router.back();
-    },
-  },
-};
+onMounted(() => {
+  fetchFilm()
+})
 </script>

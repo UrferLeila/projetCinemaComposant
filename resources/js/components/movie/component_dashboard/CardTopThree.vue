@@ -26,10 +26,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "CardTopThree",
-  props: {
+<script setup>
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+const props = defineProps({
     movies: {
       type: Array,
       required: true,
@@ -41,19 +43,19 @@ export default {
     isRankingMode: {
       type: Boolean,
       required: true,
-    },
-  },
-  methods: {
-    goReservation(id) {
-      this.$router.push(`/reservation/${id}`);
-    },
-    goEdit(id) {
-      this.$router.push(`/film/edit/${id}`);
-    },
-    revenueShare(movie) {
-      const total = this.movies.reduce((s, m) => s + m.revenu, 0);
-      return total ? Math.round((movie.revenu / total) * 100) : 0;
-    },
-  },
-};
+    }
+  })
+
+function goReservation(id) {
+  router.push(`/reservation/${id}`)
+}
+
+function goEdit(id) {
+  router.push(`/film/edit/${id}`)
+}
+
+function revenueShare(movie) {
+  const total = props.movies.reduce((s, m) => s + m.revenu, 0)
+  return total ? Math.round((movie.revenu / total) * 100) : 0
+}
 </script>
