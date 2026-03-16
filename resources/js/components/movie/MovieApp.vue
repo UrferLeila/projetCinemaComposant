@@ -41,7 +41,67 @@
   </div>
 </template>
 
-<script>
+
+<script setup>
+  //composition
+  import { ref, onMounted } from "vue";
+  import { useRouter } from "vue-router"; 
+  import axios from "axios";
+  import FilmCard from "./FilmCard.vue";
+
+  const movies = ref([]);
+  const loading = ref(true);
+  const error = ref(null);
+  const isAdmin = ref(false);
+
+  const router = useRouter();
+
+  const fetchData = async () => 
+  {
+    try {
+      loading.value = true;
+      const [moviesRes, adminRes] = await Promise.all([
+        fetch("/film/all"),
+        fetch("/api/isAdmin"),
+      ]);
+
+      if (!moviesRes.ok) throw new Error("Impossible de charger les films");
+      if (!adminRes.ok) throw new Error("Impossible d'obtenir le statut admin");
+
+      movies.value = await moviesRes.json();
+      isAdmin.value = await adminRes.json();
+    } catch (err) {
+      error.value = err.message;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const deleteFilm = async (id) => 
+  {
+    if (!confirm("Voulez-vous vraiment supprimer ce film ?")) return;
+    try {
+      await axios.delete(`/film/${id}`);
+      movies.value = movies.value.filter((movie) => movie.id !== id);
+    } catch (err) {
+      alert("Erreur lors de la suppression du film.");
+    }
+  };
+
+  const goReservation = (id) => router.push(`/reservation/${id}`);
+  const goFilmModif = (id) => router.push(`/film/edit/${id}`);
+  const goAddMovie = () => router.push(`/film/add`);
+  const goStats = () => router.push(`/admin/stats`);
+
+  onMounted(() => 
+  {
+    fetchData();
+  });
+</script>
+
+
+<!-- <script>
+  //option
 import axios from "axios";
 import FilmCard from "./FilmCard.vue";
 
@@ -115,4 +175,4 @@ export default {
     this.fetchData();
   },
 };
-</script>
+</script> -->

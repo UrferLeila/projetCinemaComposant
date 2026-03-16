@@ -27,20 +27,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ResumerCard",
-
-  props: {
-    films: {
-      type: Object, // films as object map
+<script setup>
+  //Composition
+  const props = defineProps({
+  films: {
+      type: Object, 
       required: true,
     },
     reservations: {
       type: Array,
       required: true,
     },
-  },
-};
+})
+
 </script>
 

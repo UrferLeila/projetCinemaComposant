@@ -16,21 +16,23 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ResumeMovie",
-  props: {
-    movie: {
+<script setup>
+
+  const props = defineProps({
+    movie:
+    {
       type: Object,
       required: true,
     },
-    selectedSeance: {
+    selectedSeance:
+    {
       type: Object,
       default: null,
     },
-  },
-  methods: {
-    formatSeance(seance) {
+    })
+
+    const formatSeance = (seance) => 
+    {
       if (!seance) return "";
       const date = new Date(seance.date).toLocaleDateString("fr-CH", {
         weekday: "long",
@@ -39,7 +41,6 @@ export default {
         year: "numeric",
       });
       return `${date}, ${seance.heure}`;
-    },
-  },
-};
+    };
+
 </script>

@@ -17,7 +17,74 @@
   </div>
 </template>
 
-<script>
+<script setup>
+  //Composition
+
+  import ResumerCard from "./ResumerCard.vue";
+  import { ref, onMounted, computed } from "vue";
+
+  const reservations = ref([]);
+  const films = ref({});
+  const loading = ref(false);
+  const error = ref(null);
+
+  const totalPrice = computed(() => 
+  {
+      return reservations.value.reduce(
+        (sum, res) => sum + (res.total_price || 0),
+        0
+      );
+  });
+  
+  const fetchData = async () => 
+  {
+    try {
+      loading.value = true; // Use .value
+
+      const resResponse = await fetch("/api/reservations");
+      if (!resResponse.ok) throw new Error("Impossible de charger les réservations");
+      
+      const reservationsData = await resResponse.json();
+
+      const reservationsWithPrice = await Promise.all(
+        reservationsData.map(async (res) => {
+          const priceResponse = await fetch(`/api/totalPrice/${res.id}`);
+          if (!priceResponse.ok) throw new Error(`Erreur prix ID: ${res.id}`);
+          const priceData = await priceResponse.json();
+          return { ...res, total_price: priceData.total_price };
+        })
+      );
+
+      reservations.value = reservationsWithPrice; // Use .value
+
+      const filmsResponse = await fetch("/film/all");
+      if (!filmsResponse.ok) throw new Error("Impossible de charger les films");
+      const filmsArray = await filmsResponse.json();
+
+      // Resetting the object map
+      const tempFilms = {};
+      filmsArray.forEach((f) => {
+        tempFilms[f.id] = f.titre;
+      });
+      films.value = tempFilms; // Update the ref
+
+    } catch (err) {
+      error.value = err.message;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  onMounted(() => 
+  {
+    fetchData();
+  });
+
+</script>
+
+
+<!-- <script>
+  //Options
 import ResumerCard from "./ResumerCard.vue";
 
 export default {
@@ -43,7 +110,8 @@ export default {
   },
 
   methods: {
-    async fetchData() {
+    async fetchData() 
+    {
       try {
         this.loading = true;
 
@@ -89,4 +157,4 @@ export default {
     this.fetchData();
   },
 };
-</script>
+</script> -->

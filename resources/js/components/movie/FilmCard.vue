@@ -21,19 +21,17 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "FilmCard",
+<script setup>
 
-  props: {
-    movie: {
-      type: Object,
-      required: true,
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
+//Composition
+const props = defineProps({
+  movie: {
+    type: Object,
+    required: true,
   },
-};
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+})
 </script>

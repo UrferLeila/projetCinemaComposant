@@ -16,23 +16,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "SeanceSelector",
-  props: {
-    seances: {
-      type: Array,
-      required: true,
-    },
-    selectedSeance: {
-      type: Object,
-      default: null,
-    },
-  },
-  methods: {
-    formatDate(date) {
+
+<script setup>
+
+  const props = defineProps({
+    seances: 
+      {
+        type: Array,
+        required: true,
+      },
+      selectedSeance:
+      {
+        type: Object,
+        default: null,
+      },
+    })
+
+    const formatDate = (date) => 
+    {
+      if (!date) return "";
       return new Date(date).toLocaleDateString("fr-CH");
-    },
-  },
-};
+    };
+
 </script>

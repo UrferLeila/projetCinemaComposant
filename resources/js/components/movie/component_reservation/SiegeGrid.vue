@@ -47,20 +47,17 @@
   </div>
 </template>
 
-
-<script>
-export default {
-  name: "SiegeGrid",
-
-  props: {
-    seatRows: {
-      type: Array,
-      required: true,
-    },
-    selectedSeats: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+<script setup>
+  const props = defineProps({
+  seatRows: 
+    {
+        type: Array,
+        required: true,
+      },
+    selectedSeats: 
+      {
+        type: Array,
+        required: true,
+      },
+  })
 </script>
