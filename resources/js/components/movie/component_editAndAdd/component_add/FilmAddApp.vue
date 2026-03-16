@@ -1,16 +1,9 @@
 <template>
   <div class="edit-movie-page">
-    <AddCard/>
+    <AddCard />
   </div>
 </template>
 
-<script>
-import AddCard from "./AddCard.vue";
-
-export default {
-  name: "EditMoviePage",
-  components: {
-    AddCard,
-  },
-};
+<script setup>
+import AddCard from "./AddCard.vue"
 </script>

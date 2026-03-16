@@ -18,48 +18,53 @@
         <div class="admin-actions">
           <button @click="goReservation(movie.id)">Séances</button>
           <button @click="goEdit(movie.id)">Modifier</button>
-        </div>
+        </div>l
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "CardRanking",
-  props: {
-    movies: {
-      type: Array,
-      required: true,
-    },
-    sortedMovies: {
-      type: Array,
-      required: true,
-    },
-    isRankingMode: {
-      type: Boolean,
-      required: true,
-    },
+<script setup>
+import { computed } from "vue"
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+const props = defineProps({
+  movies: {
+    type: Array,
+    required: true
   },
-  methods: {
-    goReservation(id) {
-      this.$router.push(`/reservation/${id}`);
-    },
-    goEdit(id) {
-      this.$router.push(`/film/edit/${id}`);
-    },
-    revenueShare(movie) {
-      const total = this.movies.reduce((s, m) => s + m.revenu, 0);
-      return total ? Math.round((movie.revenu / total) * 100) : 0;
-    },
+  sortedMovies: {
+    type: Array,
+    required: true
   },
-  computed: {
-    displayedMovies() {
-      return this.isRankingMode ? this.sortedMovies.slice(3) : this.sortedMovies;
-    },
-    maxRevenue() {
-      return this.movies.length ? Math.max(...this.movies.map((m) => m.revenu)) : 0;
-    },
-  },
-};
+  isRankingMode: {
+    type: Boolean,
+    required: true
+  }
+})
+
+function goReservation(id) {
+  router.push(`/reservation/${id}`)
+}
+
+function goEdit(id) {
+  router.push(`/film/edit/${id}`)
+}
+
+function revenueShare(movie) {
+  const total = props.movies.reduce((s, m) => s + m.revenu, 0)
+  return total ? Math.round((movie.revenu / total) * 100) : 0
+}
+
+const displayedMovies = computed(() => {
+  return props.isRankingMode ? props.sortedMovies.slice(3) : props.sortedMovies
+})
+
+const maxRevenue = computed(() => {
+  return props.movies.length
+    ? Math.max(...props.movies.map((m) => m.revenu))
+    : 0
+})
 </script>

@@ -19,10 +19,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "StatMovie",
-  props: {
+<script setup>
+
+const router = useRouter()
+
+const props = defineProps({
     movies: {
       type: Array,
       required: true,
@@ -34,15 +35,14 @@ export default {
     isRankingMode: {
       type: Boolean,
       required: true,
-    },
-  },
-  computed: {
-    totalRevenue() {
-      return this.movies.reduce((sum, m) => sum + m.revenu, 0);
-    },
-    totalPlaces() {
-      return this.movies.reduce((sum, m) => sum + m.places_vendues, 0);
-    },
-  },
-};
+    }
+  })
+
+const totalRevenue = computed(() => {
+  return props.movies.reduce((sum, m) => sum + m.revenu, 0)
+})
+
+const totalPlaces = computed(() => {
+  return props.movies.reduce((sum, m) => sum + m.places_vendues, 0)
+})
 </script>

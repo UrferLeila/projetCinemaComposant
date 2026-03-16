@@ -4,9 +4,6 @@
     <div v-if="localSeances.length === 0" class="no-seances">
     <p>Aucune séance ajoutée.</p>
 </div>
-
-
-
     <div
       v-for="(seance, index) in localSeances"
       :key="seance.id || index"
@@ -25,45 +22,45 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "EditAndAddSeance",
-  props: {
-    seances: {
-      type: Array,
-      default: [],
-    },
+<script setup>
+import { ref, watch } from "vue";
+
+const props = defineProps({
+  seances: {
+    type: Array,
+    default: () => [],
   },
-  data() {
-    return {
-      localSeances: [...this.seances],
-    };
+});
+
+const emit = defineEmits(["update:seances"]);
+
+const localSeances = ref([...props.seances]);
+
+watch(
+  localSeances,
+  (value) => {
+    emit("update:seances", value);
   },
-  watch: {
-    localSeances: {
-      deep: true,
-      handler(value) {
-        this.$emit("update:seances", value);
-      },
-    },
-    seances: {
-      deep: true,
-      handler(value) {
-        this.localSeances = [...value];
-      },
-    },
+  { deep: true }
+);
+
+watch(
+  () => props.seances,
+  (value) => {
+    localSeances.value = [...value];
   },
-  methods: {
-    add() {
-      this.localSeances.push({
-        date: "",
-        heure: "",
-        salle_id: 1,
-      });
-    },
-    remove(index) {
-      this.localSeances.splice(index, 1);
-    },
-  },
-};
+  { deep: true }
+);
+
+function add() {
+  localSeances.value.push({
+    date: "",
+    heure: "",
+    salle_id: 1,
+  });
+}
+
+function remove(index) {
+  localSeances.value.splice(index, 1);
+}
 </script>
