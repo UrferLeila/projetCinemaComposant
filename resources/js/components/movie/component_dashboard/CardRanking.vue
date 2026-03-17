@@ -18,53 +18,49 @@
         <div class="admin-actions">
           <button @click="goReservation(movie.id)">Séances</button>
           <button @click="goEdit(movie.id)">Modifier</button>
-        </div>l
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue"
 import { useRouter } from "vue-router"
+interface Movie {
+  id: number | string
+  titre: string;
+  image: string; 
+  places_vendues: number; 
+  revenu: number; 
+}
 
 const router = useRouter()
 
-const props = defineProps({
-  movies: {
-    type: Array,
-    required: true
-  },
-  sortedMovies: {
-    type: Array,
-    required: true
-  },
-  isRankingMode: {
-    type: Boolean,
-    required: true
-  }
-})
+const props = defineProps<{
+  movies: Movie[];
+  sortedMovies: Movie[];
+  isRankingMode: boolean;
+}>();
 
-function goReservation(id) {
-  router.push(`/reservation/${id}`)
+function goReservation(id: number | string): void {
+  router.push(`/reservation/${id}`);
 }
 
-function goEdit(id) {
-  router.push(`/film/edit/${id}`)
+function goEdit(id: number | string): void {
+  router.push(`/film/edit/${id}`);
 }
 
-function revenueShare(movie) {
-  const total = props.movies.reduce((s, m) => s + m.revenu, 0)
-  return total ? Math.round((movie.revenu / total) * 100) : 0
+function revenueShare(movie: Movie): number {
+  const total = props.movies.reduce((s, m) => s + m.revenu, 0);
+  return total ? Math.round((movie.revenu / total) * 100) : 0;
 }
 
-const displayedMovies = computed(() => {
-  return props.isRankingMode ? props.sortedMovies.slice(3) : props.sortedMovies
-})
+const displayedMovies = computed(() =>
+  props.isRankingMode ? props.sortedMovies.slice(3) : props.sortedMovies
+);
 
-const maxRevenue = computed(() => {
-  return props.movies.length
-    ? Math.max(...props.movies.map((m) => m.revenu))
-    : 0
-})
+const maxRevenue = computed(() =>
+  props.movies.length ? Math.max(...props.movies.map((m) => m.revenu)) : 0
+);
 </script>

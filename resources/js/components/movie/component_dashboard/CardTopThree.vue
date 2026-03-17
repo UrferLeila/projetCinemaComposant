@@ -26,36 +26,35 @@
   </div>
 </template>
 
-<script setup>
-import { useRouter } from "vue-router"
+<script setup lang="ts">
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-
-const props = defineProps({
-    movies: {
-      type: Array,
-      required: true,
-    },
-    sortedMovies: {
-      type: Array,
-      required: true,
-    },
-    isRankingMode: {
-      type: Boolean,
-      required: true,
-    }
-  })
-
-function goReservation(id) {
-  router.push(`/reservation/${id}`)
+interface Movie {
+  id: number | string;
+  titre: string;
+  image: string;
+  places_vendues: number;
+  revenu: number;
 }
 
-function goEdit(id) {
-  router.push(`/film/edit/${id}`)
+const router = useRouter();
+
+const props = defineProps<{
+  movies: Movie[];
+  sortedMovies: Movie[];
+  isRankingMode: boolean;
+}>();
+
+function goReservation(id: number | string): void {
+  router.push(`/reservation/${id}`);
 }
 
-function revenueShare(movie) {
-  const total = props.movies.reduce((s, m) => s + m.revenu, 0)
-  return total ? Math.round((movie.revenu / total) * 100) : 0
+function goEdit(id: number | string): void {
+  router.push(`/film/edit/${id}`);
+}
+
+function revenueShare(movie: Movie): number {
+  const total = props.movies.reduce((s, m) => s + m.revenu, 0);
+  return total ? Math.round((movie.revenu / total) * 100) : 0;
 }
 </script>
