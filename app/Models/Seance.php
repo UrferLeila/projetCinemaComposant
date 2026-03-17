@@ -10,7 +10,7 @@ class Seance extends Model
     protected $fillable = [
         'date',
         'heure',
-        'salle_id', 
+        'salle_id',
         'film_id',
     ];
 
@@ -19,7 +19,7 @@ class Seance extends Model
         return $this->belongsTo(Film::class);
     }
 
-     public function salle()
+    public function salle()
     {
         return $this->belongsTo(Salle::class);
     }

@@ -21,9 +21,8 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
-//Composition
 const props = defineProps({
   movie: {
     type: Object,
@@ -32,6 +31,6 @@ const props = defineProps({
   isAdmin: {
     type: Boolean,
     default: false,
-  },
+  },  
 })
 </script>

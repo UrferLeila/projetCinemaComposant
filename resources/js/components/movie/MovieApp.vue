@@ -42,14 +42,15 @@
 </template>
 
 
-<script setup>
-  //composition
+<script setup lang="ts">
   import { ref, onMounted } from "vue";
   import { useRouter } from "vue-router"; 
   import axios from "axios";
   import FilmCard from "./FilmCard.vue";
+  import type { Film } from '../../types/Film.ts'
 
-  const movies = ref([]);
+
+  const movies = ref<Film[]>([]);
   const loading = ref(true);
   const error = ref(null);
   const isAdmin = ref(false);
@@ -77,7 +78,7 @@
     }
   };
 
-  const deleteFilm = async (id) => 
+  const deleteFilm = async (id : number | string) =>
   {
     if (!confirm("Voulez-vous vraiment supprimer ce film ?")) return;
     try {
@@ -88,8 +89,8 @@
     }
   };
 
-  const goReservation = (id) => router.push(`/reservation/${id}`);
-  const goFilmModif = (id) => router.push(`/film/edit/${id}`);
+  const goReservation = (id : number | string) => router.push(`/reservation/${id}`);
+  const goFilmModif = (id : number | string) => router.push(`/film/edit/${id}`);
   const goAddMovie = () => router.push(`/film/add`);
   const goStats = () => router.push(`/admin/stats`);
 
@@ -100,79 +101,3 @@
 </script>
 
 
-<!-- <script>
-  //option
-import axios from "axios";
-import FilmCard from "./FilmCard.vue";
-
-export default {
-  name: "MovieProgram",
-
-  components: {
-    FilmCard,
-  },
-
-  data() {
-    return {
-      movies: [],
-      loading: true,
-      error: null,
-      isAdmin: false,
-    };
-  },
-
-  methods: {
-    async fetchData() {
-      try {
-        this.loading = true;
-
-        const [moviesRes, adminRes] = await Promise.all([
-          fetch("/film/all"),
-          fetch("/api/isAdmin"),
-        ]);
-
-        if (!moviesRes.ok) throw new Error("Impossible de charger les films");
-        if (!adminRes.ok) throw new Error("Impossible d'obtenir le statut admin");
-
-        this.movies = await moviesRes.json();
-        this.isAdmin = await adminRes.json();
-      } catch (err) {
-        this.error = err.message;
-      } finally {
-        this.loading = false;
-      }
-    },
-
-    async deleteFilm(id) {
-      if (!confirm("Voulez-vous vraiment supprimer ce film ?")) return;
-
-      try {
-        await axios.delete(`/film/${id}`);
-        this.movies = this.movies.filter((movie) => movie.id !== id);
-      } catch (err) {
-        alert("Erreur lors de la suppression du film.");
-      }
-    },
-
-    goReservation(id) {
-      this.$router.push(`/reservation/${id}`);
-    },
-
-    goFilmModif(id) {
-      this.$router.push(`/film/edit/${id}`);
-    },
-
-    goAddMovie() {
-      this.$router.push(`/film/add`);
-    },
-
-    goStats() {
-      this.$router.push(`/admin/stats`);
-    },
-  },
-
-  mounted() {
-    this.fetchData();
-  },
-};
-</script> -->

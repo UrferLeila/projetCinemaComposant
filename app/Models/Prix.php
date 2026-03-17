@@ -9,7 +9,7 @@ class Prix extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'type'; 
+    protected $primaryKey = 'type';
     public $incrementing = false;
     protected $keyType = 'string';
     public $timestamps = false;

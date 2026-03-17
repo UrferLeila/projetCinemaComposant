@@ -42,10 +42,10 @@ class Reservation extends Model
 
     // Calculate the total price of the reservation
     public function totalPrice(): float
-{
-    return (float) $this->reservationSieges->sum(function($reservationSiege) {
-        return $reservationSiege->siege->prix->prix ?? 0; // use 'prix' column
-    });
-}
+    {
+        return (float) $this->reservationSieges->sum(function ($reservationSiege) {
+            return $reservationSiege->siege->prix->prix ?? 0; // use 'prix' column
+        });
+    }
 
 }
