@@ -9,7 +9,7 @@ class Siege extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'nom'; 
+    protected $primaryKey = 'nom';
     public $incrementing = false;
     protected $keyType = 'string';
     public $timestamps = false;
