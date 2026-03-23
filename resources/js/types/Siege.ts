@@ -9,4 +9,6 @@ export interface Siege {
     prix?: Prix;
     salle?: Salle;
 
+    occupied?: boolean;
+
 }

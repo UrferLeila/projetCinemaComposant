@@ -37,17 +37,21 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue";
   import axios from "axios";
 
-  const props = defineProps({
-    selectedMovie: { type: Object, required: true },
-    selectedSeance: { type: Object, required: true },
-    selectedSeats: { type: Array, required: true },
-  })
+  import type { Film } from '../../../types/Film.ts';
+  import type { Seance } from '../../../types/Seance.ts';
+  import type { Siege } from '../../../types/Siege.ts';
 
-  const emit = defineEmits(['close', 'reservation-made'])
+  const props = defineProps<{
+    selectedMovie: Film;
+    selectedSeance: Seance;
+    selectedSeats: Siege[]; 
+  }>();
+
+  const emit = defineEmits(['close', 'reservation-made']);
 
   const seatNames = computed(() => 
   {
@@ -56,46 +60,64 @@
 
   const totalPrice = computed(() => 
   {
-    const priceMap = { normal: 20, vip: 45 };
     return props.selectedSeats.reduce((sum, seat) => {
-      const type = seat.prix_type || seat.prix?.type || "normal";
-      return sum + (priceMap[type] || 0);
+      const price = seat.prix?.prix ?? 20; 
+      return sum + price;
     }, 0);
   });
 
   const confirmReservation = async () => 
   {
     if (!props.selectedSeance.id) {
-      alert("Séance invalide, veuillez la sélectionner à nouveau.");
-      return;
-    }
-
-    if (!props.selectedSeats.length) {
-      alert("Veuillez sélectionner au moins un siège.");
+      alert("Séance invalide.");
       return;
     }
 
     try {
       const response = await axios.post("/reservations", {
         seance_id: props.selectedSeance.id,
-        seats: props.selectedSeats.map((seat) => seat.nom),
+        seats: props.selectedSeats.map(s => s.nom),
       });
 
-      if (response.data.success) {
+      if (response.status === 200 || response.status === 201) {
         alert('Réservation confirmée !');
         emit('close');
         emit('reservation-made');
       }
-    } catch (error) {
-      if (error.response && error.response.status === 409) {
-        alert(error.response.data.message);
-      } else if (error.response && error.response.status === 422) {
-        alert("Données invalides pour la réservation.");
-        console.error(error.response.data.errors);
-      } else {
-        console.error(error);
-        alert("Erreur lors de la réservation.");
-      }
+    } 
+    
+    // catch (error) {
+    //   const status = error.response?.status;
+    //   if (status === 409) {
+    //     alert(error.response.data.message);
+    //   } else {
+    //     alert("Erreur lors de la réservation.");
+    //   }
+    // }
+
+   catch (error) {
+    let message: string = "Une erreur inconnue est survenue.";
+
+  if (axios.isAxiosError(error)) {
+    const status = error.response?.status;
+    const serverMessage = error.response?.data?.message;
+
+    if (status === 409 && serverMessage) {
+      message = serverMessage;
+    } else if (status === 422) {
+      message = "Données invalides pour la réservation.";
+    } else {
+      message = "Erreur lors de la réservation (Serveur).";
     }
+  } 
+  else if (error instanceof Error) {
+    message = error.message;
+  } 
+  else {
+    message = String(error);
+  }
+  
+  alert(message);
+}
   }
 </script>

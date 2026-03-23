@@ -20,7 +20,7 @@ Elle permet aussi une gestion admin.
 ## Prérequis
 
 - Installer node-js
-- Installer wampserer (Voir la partie installation si besoin)
+- Installer wampserver (Voir la partie installation si besoin)
 - Installer composer
 
 ## Installation de WampServer
@@ -35,7 +35,7 @@ Elle permet aussi une gestion admin.
 
 ### 1. Cloner le dépôt :
 
-    git clone "https://github.com/ceffDptInfo/projetCinema.git"
+    git clone "url du dépôt"
 
 ### 2. Env.dev :
 

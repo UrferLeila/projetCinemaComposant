@@ -47,17 +47,11 @@
   </div>
 </template>
 
-<script setup>
-  const props = defineProps({
-  seatRows: 
-    {
-        type: Array,
-        required: true,
-      },
-    selectedSeats: 
-      {
-        type: Array,
-        required: true,
-      },
-  })
+<script setup lang="ts">
+import type { Siege } from '../../../types/Siege.ts'
+
+const props = defineProps<{
+  seatRows: Siege[][]; 
+  selectedSeats: Siege[];
+}>()
 </script>

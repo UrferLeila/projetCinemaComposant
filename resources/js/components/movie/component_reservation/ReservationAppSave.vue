@@ -9,104 +9,66 @@
 
   <div class="header-container" v-else>
     <ResumeMovie
-      :movie="movie"
-      :selectedSeance="selectedSeance"
+      :movie="(movie as Film)"
+      :selectedSeance="(selectedSeance as Seance)"
       @reserve="openConnection"
     />
 
     <SeanceSelector
       :seances="seances"
-      :selectedSeance="selectedSeance"
+      :selectedSeance="(selectedSeance as Seance)"
       @select-seance="selectSeance"
     />
-
-    <!-- <div class="seats-wrapper">
-      <div class="legend-container">
-        <div class="legend-item">
-          <div class="color normal"></div>
-          <span>Normal (20 CHF)</span>
-        </div>
-        <div class="legend-item">
-          <div class="color vip"></div>
-          <span>VIP (45 CHF)</span>
-        </div>
-        <div class="legend-item">
-          <div class="color selected"></div>
-          <span>Votre choix</span>
-        </div>
-        <div class="legend-item">
-          <div class="color occupied"></div>
-          <span>Occupé</span>
-        </div>
-      </div>
-
-      <div
-        v-for="(row, rowIndex) in seatRows"
-        :key="rowIndex"
-        :class="[
-          'seats-container',
-          row[0]?.prix?.type === 'vip' ? 'seats-container-vip' : 'seats-container-normal',
-        ]"
-      >
-        <div
-          v-for="seat in row"
-          :key="seat.nom"
-          class="seat"
-          :class="{
-            vip: seat.prix?.type === 'vip',
-            normal: seat.prix?.type !== 'vip',
-            occupied: seat.occupied,
-            selected: selectedSeats.some((s) => s.nom === seat.nom),
-          }"
-          @click="toggleSeat(seat)"
-        ></div>
-      </div>
-
-      <h1 class="h1">Écran</h1>
-    </div> -->
 
     <SiegeGrid
       @toggle-seat="toggleSeat"
       :seatRows="seatRows"
       :selectedSeats="selectedSeats"
     />
-
   </div>
 
   <Details
     v-if="showDetails"
+    :selectedMovie="(movie as Film)"
+    :selectedSeance="(selectedSeance as Seance)"
+    :selectedSeats="selectedSeats"
     @close="closeAll"
     @reservation-made="refreshSeats"
-    :selectedMovie="movie"
-    :selectedSeance="selectedSeance"
-    :selectedSeats="selectedSeats"
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
-import Details from "@/components/movie/component_reservation/Details.vue";
-import SeanceSelector from "@/components/movie/component_reservation/SeanceSelector.vue";
-import ResumeMovie from "@/components/movie/component_reservation/ResumeMovie.vue";
-import SiegeGrid from "@/components/movie/component_reservation/SiegeGrid.vue";
+import Details from  "./Details.vue";
+import SeanceSelector from "./SeanceSelector.vue";
+import ResumeMovie from "./ResumeMovie.vue";
+import SiegeGrid from "./SiegeGrid.vue";
 
-const props = defineProps(["id"]);
+import type { Siege } from '../../../types/Siege.ts'
+import type { Film } from '../../../types/Film.ts'
+import type { Seance } from '../../../types/Seance.ts'
+
+
+const props = defineProps<{
+  id: string | number;
+}>();
 
 const isAuth = ref(false);
 const loading = ref(true);
-const error = ref(null);
-const seats = ref([]);
-const seatRows = ref([]);
-const selectedSeats = ref([]);
+const error = ref<string | null>(null);
 const showDetails = ref(false);
-const movie = ref(null);
-const seances = ref([]);
-const selectedSeance = ref(null);
+
+const seats = ref<Siege[]>([]);
+const seatRows = ref<Siege[][]>([]);
+const selectedSeats = ref<Siege[]>([]);
+const movie = ref<Film | null>(null);
+const seances = ref<Seance[]>([]);
+const selectedSeance = ref<Seance | null>(null);
 
 const organizeSeats = () => 
 {
-  const vipSeats = seats.value.filter((s) => s.prix?.type === "vip");
-  const normalSeats = seats.value.filter((s) => s.prix?.type !== "vip");
+  const vipSeats = seats.value.filter((s: Siege) => s.prix?.type === "vip");
+  const normalSeats = seats.value.filter((s: Siege) => s.prix?.type !== "vip");
   seatRows.value = [];
 
   for (let i = 0; i < vipSeats.length; i += 7) {
@@ -117,7 +79,7 @@ const organizeSeats = () =>
   }
 };
 
-const loadOccupiedSeats = async (seanceId) => 
+const loadOccupiedSeats = async (seanceId: number | String) => 
 {
   try {
     const res = await fetch(`/seance/${seanceId}/occupied`);
@@ -150,18 +112,20 @@ const loadIsAuth = async () =>
     const data = await response.json();
     isAuth.value = data;
   } catch (err) {
-    error.value = err.message;
-  }
+      error.value = err instanceof Error ? err.message : String(err);
+    } finally {
+      loading.value = false; 
+    }
 };
 
-const selectSeance = (seance) => 
+const selectSeance = (seance : Seance) => 
 {
   selectedSeance.value = seance;
   selectedSeats.value = [];
   loadOccupiedSeats(seance.id);
 };
 
-const toggleSeat = (seat) => 
+const toggleSeat = (seat: Siege) => 
 {
   if (!selectedSeance.value) {
     alert("Veuillez sélectionner une séance avant de choisir un siège.");
@@ -169,7 +133,7 @@ const toggleSeat = (seat) =>
   }
   if (seat.occupied) return;
 
-  const index = selectedSeats.value.findIndex((s) => s.nom === seat.nom);
+  const index = selectedSeats.value.findIndex((s: Siege) => s.nom === seat.nom);
   if (index !== -1) {
     selectedSeats.value.splice(index, 1);
   } else {
@@ -213,10 +177,11 @@ onMounted(async () =>
     seances.value = filmData.seances || [];
 
     await loadIsAuth();
-  } catch (err) {
-    error.value = err.message;
+  } 
+  catch (err) {
+    error.value = err instanceof Error ? err.message : String(err);
   } finally {
-    loading.value = false;
+    loading.value = false; 
   }
 });
 </script>

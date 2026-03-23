@@ -17,22 +17,15 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
+  import type { Seance } from '../../../types/Seance.ts'
 
-  const props = defineProps({
-    seances: 
-      {
-        type: Array,
-        required: true,
-      },
-      selectedSeance:
-      {
-        type: Object,
-        default: null,
-      },
-    })
+  const props = defineProps<{
+    seances: Seance[]; 
+    selectedSeance: Seance;
+  }>()
 
-    const formatDate = (date) => 
+    const formatDate = (date: string) => 
     {
       if (!date) return "";
       return new Date(date).toLocaleDateString("fr-CH");

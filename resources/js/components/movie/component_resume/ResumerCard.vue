@@ -6,17 +6,16 @@
       :key="res.id"
     >
       <div class="movie-info">
-        <h3>{{ films[res.seance?.film_id] || "Film inconnu" }}</h3>
+        <h3>{{ filmsMap[res.seance?.film_id ?? 0] || "Film inconnu" }}</h3>
         <p>
           <strong>Date & Heure :</strong>
           {{ res.seance?.date || "?" }} à {{ res.seance?.heure || "?" }}
         </p>
       </div>
-
       <div class="seats-info">
         <p>
           <strong>Places réservées :</strong>
-          {{ res.reservation_sieges?.map((s) => s.siege_nom).join(", ") || "Aucune" }}
+          {{ res.reservationSieges?.map((s) => s.siege_nom).join(", ") || "Aucune" }}
         </p>
 
         <p>
@@ -27,18 +26,27 @@
   </div>
 </template>
 
-<script setup>
-  //Composition
-  const props = defineProps({
-  films: {
-      type: Object, 
-      required: true,
-    },
-    reservations: {
-      type: Array,
-      required: true,
-    },
-})
+<script setup lang="ts">
+  import type { Film } from '../../../types/Film.ts'
+  import type { Reservation } from '../../../types/Reservation.ts'
+  import { computed } from "vue";
 
+
+  const filmsMap = computed(() => 
+  {
+  const map: Record<number, string> = {};
+  props.films.forEach(film => {
+    if (film.id) map[Number(film.id)] = film.titre;
+  });
+  return map;
+  });
+
+  //Composition
+  const props = defineProps<{
+    films: Film[]; 
+    reservations: Reservation[];
+  }>()
+
+  
 </script>
 

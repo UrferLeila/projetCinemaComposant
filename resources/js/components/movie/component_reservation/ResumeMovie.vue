@@ -16,22 +16,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+  import type { Seance } from '../../../types/Seance.ts'
+  import type { Film } from '../../../types/Film.ts'
 
-  const props = defineProps({
-    movie:
-    {
-      type: Object,
-      required: true,
-    },
-    selectedSeance:
-    {
-      type: Object,
-      default: null,
-    },
-    })
 
-    const formatSeance = (seance) => 
+   const props = defineProps<{
+    movie: Film; 
+    selectedSeance: Seance;
+  }>()
+
+    const formatSeance = (seance : Seance) => 
     {
       if (!seance) return "";
       const date = new Date(seance.date).toLocaleDateString("fr-CH", {

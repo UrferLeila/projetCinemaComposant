@@ -52,7 +52,7 @@
 
   const movies = ref<Film[]>([]);
   const loading = ref(true);
-  const error = ref(null);
+  const error = ref<string | null>(null);
   const isAdmin = ref(false);
 
   const router = useRouter();
@@ -72,9 +72,9 @@
       movies.value = await moviesRes.json();
       isAdmin.value = await adminRes.json();
     } catch (err) {
-      error.value = err.message;
+      error.value = err instanceof Error ? err.message : String(err);
     } finally {
-      loading.value = false;
+      loading.value = false; 
     }
   };
 
